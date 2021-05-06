@@ -8,9 +8,9 @@ namespace ProductStoreDB.Models
     {
         public int SupplierID { get; set; }
         public string SupplierName { get; set; }
-        /* 
-          public string LogoFileName{get;set;}
-         */
+        public int? ProductTypeId { get; set; } 
+        public string LogoFileName{get;set;}
+         
         public ICollection<Product> Products { get; set; }
 
 

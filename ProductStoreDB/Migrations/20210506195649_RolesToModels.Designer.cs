@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProductStoreDB.Models;
 
 namespace ProductStoreDB.Migrations
 {
     [DbContext(typeof(ProductSroreDB))]
-    partial class ProductSroreDBModelSnapshot : ModelSnapshot
+    [Migration("20210506195649_RolesToModels")]
+    partial class RolesToModels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -130,20 +132,20 @@ namespace ProductStoreDB.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Login")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("RoleId")
+                        .HasColumnType("int");
+
                     b.HasKey("UserId");
 
-                    b.HasIndex("EmployeeId");
+                    b.HasIndex("RoleId");
 
-                    b.ToTable("Users");
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("ProductStoreDB.Models.Employee", b =>
@@ -173,18 +175,9 @@ namespace ProductStoreDB.Migrations
 
             modelBuilder.Entity("ProductStoreDB.Models.User", b =>
                 {
-                    b.HasOne("ProductStoreDB.Models.Employee", "Employee")
+                    b.HasOne("ProductStoreDB.Models.Role", null)
                         .WithMany("Users")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
-                });
-
-            modelBuilder.Entity("ProductStoreDB.Models.Employee", b =>
-                {
-                    b.Navigation("Users");
+                        .HasForeignKey("RoleId");
                 });
 
             modelBuilder.Entity("ProductStoreDB.Models.ProductType", b =>
@@ -197,6 +190,8 @@ namespace ProductStoreDB.Migrations
             modelBuilder.Entity("ProductStoreDB.Models.Role", b =>
                 {
                     b.Navigation("Employees");
+
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("ProductStoreDB.Models.Supplier", b =>
