@@ -4,12 +4,15 @@ using System.Text;
 
 namespace ProductStoreDB.Models
 {
-    class Supplier
+   public class Supplier
     {
         public int SupplierID { get; set; }
         public string SupplierName { get; set; }
-        public int ProductTupeID { get; set; }
-        public string Logo { get; set; }
+        /* 
+          public string LogoFileName{get;set;}
+         */
+        public ICollection<Product> Products { get; set; }
+
 
     }
 }
