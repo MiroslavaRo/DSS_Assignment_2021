@@ -18,5 +18,10 @@ namespace DSS_Assignment_2021.Models
 
         public virtual ICollection<Product> Products { get; set; }
         public virtual ICollection<Supplier> Suppliers { get; set; }
+
+        public static implicit operator int(ProductType v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

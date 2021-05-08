@@ -11,7 +11,12 @@ namespace ProductStoreDB.Models
         public string SupplierName { get; set; }
         public int? ProductTypeId { get; set; } 
         public string LogoFileName{get;set;}
-         
+        /*
+        public DateTime? CreatedOn { get; set; }
+        public DateTime? EditedOn { get; set; }
+        public int CreatedBy { get; set; }
+        public int EditeddBy { get; set; }*/
+
         public ICollection<Product> Products { get; set; }
 
 
