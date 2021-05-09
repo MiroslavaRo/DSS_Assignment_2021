@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProductStoreDB.Models;
 
 namespace ProductStoreDB.Migrations
 {
     [DbContext(typeof(ProductSroreDB))]
-    partial class ProductSroreDBModelSnapshot : ModelSnapshot
+    [Migration("20210509152954_TypesOfProducts")]
+    partial class TypesOfProducts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -186,21 +188,6 @@ namespace ProductStoreDB.Migrations
                     b.HasIndex("ProductTypeId");
 
                     b.ToTable("Suppliers");
-
-                    b.HasData(
-                        new
-                        {
-                            SupplierID = 1,
-                            LogoFileName = "D:\\VUM STUDY\\1 year 2 semester\\DDS\\Assignment\\Logos\\burum.jpg",
-                            ProductTypeId = 11,
-                            SupplierName = "Burum"
-                        },
-                        new
-                        {
-                            SupplierID = 2,
-                            ProductTypeId = 3,
-                            SupplierName = "Prostokvashino"
-                        });
                 });
 
             modelBuilder.Entity("ProductStoreDB.Models.User", b =>
