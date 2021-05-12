@@ -1,11 +1,14 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ProductStoreEditor.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -24,11 +27,18 @@ namespace ProductStoreEditor
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            string conStr = this.Configuration.GetConnectionString("MyConn");
+            services.AddDbContext<ProductStoreDbContext>(options => options.UseSqlServer(conStr));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            var cultureInfoUs = new CultureInfo("en-US");
+            cultureInfoUs.NumberFormat.CurrencySymbol = "€";
+            CultureInfo.DefaultThreadCurrentCulture = cultureInfoUs;
+            CultureInfo.DefaultThreadCurrentUICulture = cultureInfoUs;
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
