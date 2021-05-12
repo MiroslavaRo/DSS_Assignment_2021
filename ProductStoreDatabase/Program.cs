@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ProductStoreDB
+namespace ProductStoreDatabase
 {
     class Program
     {

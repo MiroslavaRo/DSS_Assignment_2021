@@ -4,23 +4,23 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ProductStoreDB.Models;
+using ProductStoreDatabase.Models;
 
-namespace ProductStoreDB.Migrations
+namespace ProductStoreDatabase.Migrations
 {
-    [DbContext(typeof(ProductStoreDB))]
-    [Migration("20210511135930_CreateDatabase")]
-    partial class CreateDatabase
+    [DbContext(typeof(ProductStoreDb))]
+    [Migration("20210511201244_unwantedColumnCleanup")]
+    partial class unwantedColumnCleanup
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.5")
+                .HasAnnotation("ProductVersion", "5.0.6")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("ProductStoreDB.Models.Employee", b =>
+            modelBuilder.Entity("ProductStoreDatabase.Models.Employee", b =>
                 {
                     b.Property<int>("EmployeeId")
                         .ValueGeneratedOnAdd()
@@ -38,7 +38,7 @@ namespace ProductStoreDB.Migrations
                     b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("ProductStoreDB.Models.Product", b =>
+            modelBuilder.Entity("ProductStoreDatabase.Models.Product", b =>
                 {
                     b.Property<int>("ProductId")
                         .ValueGeneratedOnAdd()
@@ -51,22 +51,33 @@ namespace ProductStoreDB.Migrations
                     b.Property<string>("ProductName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ProductTypeId")
-                        .HasColumnType("int");
-
                     b.Property<int>("SupplierId")
                         .HasColumnType("int");
 
                     b.HasKey("ProductId");
 
-                    b.HasIndex("ProductTypeId");
-
                     b.HasIndex("SupplierId");
 
                     b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            ProductId = 1,
+                            PhotoFileName = "D:\\VUM STUDY\\1 year 2 semester\\DDS\\Assignment\\ProductPhotos\\prostomilk1.jpg",
+                            ProductName = "Prostokvashino Milk 3.2%",
+                            SupplierId = 2
+                        },
+                        new
+                        {
+                            ProductId = 2,
+                            PhotoFileName = "D:\\VUM STUDY\\1 year 2 semester\\DDS\\Assignment\\ProductPhotos\\ProstokvashinoCottageCheese.jpg",
+                            ProductName = "Prostokvashino Cottage Cheese 5 %",
+                            SupplierId = 2
+                        });
                 });
 
-            modelBuilder.Entity("ProductStoreDB.Models.ProductType", b =>
+            modelBuilder.Entity("ProductStoreDatabase.Models.ProductType", b =>
                 {
                     b.Property<int>("ProductTypeId")
                         .ValueGeneratedOnAdd()
@@ -143,7 +154,7 @@ namespace ProductStoreDB.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ProductStoreDB.Models.Supplier", b =>
+            modelBuilder.Entity("ProductStoreDatabase.Models.Supplier", b =>
                 {
                     b.Property<int>("SupplierId")
                         .ValueGeneratedOnAdd()
@@ -164,9 +175,97 @@ namespace ProductStoreDB.Migrations
                     b.HasIndex("ProductTypeId");
 
                     b.ToTable("Suppliers");
+
+                    b.HasData(
+                        new
+                        {
+                            SupplierId = 1,
+                            Company = "Burum",
+                            LogoFileName = "D:\\VUM STUDY\\1 year 2 semester\\DDS\\Assignment\\Logos\\burum.jpg",
+                            ProductTypeId = 11
+                        },
+                        new
+                        {
+                            SupplierId = 2,
+                            Company = "Prostokvashino",
+                            LogoFileName = "D:\\VUM STUDY\\1 year 2 semester\\DDS\\Assignment\\Logos\\prostokvashino.jpg",
+                            ProductTypeId = 3
+                        },
+                        new
+                        {
+                            SupplierId = 3,
+                            Company = "H&S Bakery",
+                            ProductTypeId = 4
+                        },
+                        new
+                        {
+                            SupplierId = 4,
+                            Company = "Aryzita",
+                            ProductTypeId = 4
+                        },
+                        new
+                        {
+                            SupplierId = 5,
+                            Company = "Bacardi",
+                            ProductTypeId = 6
+                        },
+                        new
+                        {
+                            SupplierId = 6,
+                            Company = "Corona",
+                            ProductTypeId = 6
+                        },
+                        new
+                        {
+                            SupplierId = 7,
+                            Company = "Nescafe",
+                            ProductTypeId = 5
+                        },
+                        new
+                        {
+                            SupplierId = 8,
+                            Company = "Nesquik",
+                            ProductTypeId = 5
+                        },
+                        new
+                        {
+                            SupplierId = 9,
+                            Company = "Maruha Nichiro",
+                            ProductTypeId = 11
+                        },
+                        new
+                        {
+                            SupplierId = 10,
+                            Company = "Dairy Pure",
+                            ProductTypeId = 3
+                        },
+                        new
+                        {
+                            SupplierId = 11,
+                            Company = "Mowi",
+                            ProductTypeId = 11
+                        },
+                        new
+                        {
+                            SupplierId = 12,
+                            Company = "Prima",
+                            ProductTypeId = 1
+                        },
+                        new
+                        {
+                            SupplierId = 13,
+                            Company = "Prima",
+                            ProductTypeId = 2
+                        },
+                        new
+                        {
+                            SupplierId = 14,
+                            Company = "Tyson Product",
+                            ProductTypeId = 10
+                        });
                 });
 
-            modelBuilder.Entity("ProductStoreDB.Models.User", b =>
+            modelBuilder.Entity("ProductStoreDatabase.Models.User", b =>
                 {
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
@@ -189,52 +288,44 @@ namespace ProductStoreDB.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("ProductStoreDB.Models.Product", b =>
+            modelBuilder.Entity("ProductStoreDatabase.Models.Product", b =>
                 {
-                    b.HasOne("ProductStoreDB.Models.ProductType", null)
-                        .WithMany("Products")
-                        .HasForeignKey("ProductTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ProductStoreDB.Models.Supplier", null)
+                    b.HasOne("ProductStoreDatabase.Models.Supplier", null)
                         .WithMany("Products")
                         .HasForeignKey("SupplierId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ProductStoreDB.Models.Supplier", b =>
+            modelBuilder.Entity("ProductStoreDatabase.Models.Supplier", b =>
                 {
-                    b.HasOne("ProductStoreDB.Models.ProductType", null)
+                    b.HasOne("ProductStoreDatabase.Models.ProductType", null)
                         .WithMany("Suppliers")
                         .HasForeignKey("ProductTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ProductStoreDB.Models.User", b =>
+            modelBuilder.Entity("ProductStoreDatabase.Models.User", b =>
                 {
-                    b.HasOne("ProductStoreDB.Models.Employee", null)
+                    b.HasOne("ProductStoreDatabase.Models.Employee", null)
                         .WithMany("Users")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ProductStoreDB.Models.Employee", b =>
+            modelBuilder.Entity("ProductStoreDatabase.Models.Employee", b =>
                 {
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("ProductStoreDB.Models.ProductType", b =>
+            modelBuilder.Entity("ProductStoreDatabase.Models.ProductType", b =>
                 {
-                    b.Navigation("Products");
-
                     b.Navigation("Suppliers");
                 });
 
-            modelBuilder.Entity("ProductStoreDB.Models.Supplier", b =>
+            modelBuilder.Entity("ProductStoreDatabase.Models.Supplier", b =>
                 {
                     b.Navigation("Products");
                 });

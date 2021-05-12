@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ProductStoreDB.Models
+namespace ProductStoreDatabase.Models
 {
     public class Supplier
     {

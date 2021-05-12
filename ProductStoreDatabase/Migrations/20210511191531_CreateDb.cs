@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace ProductStoreDB.Migrations
+namespace ProductStoreDatabase.Migrations
 {
-    public partial class CreateDatabase : Migration
+    public partial class CreateDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -82,9 +82,9 @@ namespace ProductStoreDB.Migrations
                     ProductId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ProductName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProductTypeId = table.Column<int>(type: "int", nullable: false),
                     SupplierId = table.Column<int>(type: "int", nullable: false),
-                    PhotoFileName = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    PhotoFileName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProductTypeId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -94,32 +94,13 @@ namespace ProductStoreDB.Migrations
                         column: x => x.ProductTypeId,
                         principalTable: "ProductTypes",
                         principalColumn: "ProductTypeId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Products_Suppliers_SupplierId",
                         column: x => x.SupplierId,
                         principalTable: "Suppliers",
                         principalColumn: "SupplierId",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.InsertData(
-                table: "ProductTypes",
-                columns: new[] { "ProductTypeId", "ProductTypeName" },
-                values: new object[,]
-                {
-                    { 1, "Vegetables" },
-                    { 2, "Fruits" },
-                    { 3, "Dairy" },
-                    { 4, "Bakery" },
-                    { 5, "Hot drinks" },
-                    { 6, "Alcohol" },
-                    { 7, "Snacks" },
-                    { 8, "Nuts" },
-                    { 9, "Sweets" },
-                    { 10, "Meat" },
-                    { 11, "Seafood" },
-                    { 12, "Cereals" }
                 });
 
             migrationBuilder.CreateIndex(
