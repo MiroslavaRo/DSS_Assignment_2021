@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProductStoreDatabase.Models;
 
 namespace ProductStoreDatabase.Migrations
 {
-    [DbContext(typeof(ProductStoreDb))]
-    partial class ProductStoreDbModelSnapshot : ModelSnapshot
+    [DbContext(typeof(ProductStoreDataBase))]
+    [Migration("20210512192910_Suppliers")]
+    partial class Suppliers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,22 +59,6 @@ namespace ProductStoreDatabase.Migrations
                     b.HasIndex("SupplierId");
 
                     b.ToTable("Products");
-
-                    b.HasData(
-                        new
-                        {
-                            ProductId = 1,
-                            PhotoFileName = "D:\\VUM STUDY\\1 year 2 semester\\DDS\\Assignment\\ProductPhotos\\prostomilk1.jpg",
-                            ProductName = "Prostokvashino Milk 3.2%",
-                            SupplierId = 2
-                        },
-                        new
-                        {
-                            ProductId = 2,
-                            PhotoFileName = "D:\\VUM STUDY\\1 year 2 semester\\DDS\\Assignment\\ProductPhotos\\ProstokvashinoCottageCheese.jpg",
-                            ProductName = "Prostokvashino Cottage Cheese 5 %",
-                            SupplierId = 2
-                        });
                 });
 
             modelBuilder.Entity("ProductStoreDatabase.Models.ProductType", b =>

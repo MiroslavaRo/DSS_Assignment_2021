@@ -2,7 +2,7 @@
 
 namespace ProductStoreDatabase.Migrations
 {
-    public partial class Companies : Migration
+    public partial class Suppliers : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

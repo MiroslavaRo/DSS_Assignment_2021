@@ -28,17 +28,18 @@ namespace ProductStoreEditor
         {
             services.AddControllersWithViews();
             string conStr = this.Configuration.GetConnectionString("MyConn");
-            services.AddDbContext<ProductStoreDbContext>(options => options.UseSqlServer(conStr));
+            services.AddDbContext<ProductStoreDataBaseContext>(options => options.UseSqlServer(conStr));
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            var cultureInfoUs = new CultureInfo("en-US");
-            cultureInfoUs.NumberFormat.CurrencySymbol = "€";
-            CultureInfo.DefaultThreadCurrentCulture = cultureInfoUs;
-            CultureInfo.DefaultThreadCurrentUICulture = cultureInfoUs;
+            var cultureInfo = new CultureInfo("en-US");
+            cultureInfo.NumberFormat.CurrencySymbol = "€";
+
+            CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+            CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -54,7 +55,8 @@ namespace ProductStoreEditor
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            app.UseAuthentication();
+       //     app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

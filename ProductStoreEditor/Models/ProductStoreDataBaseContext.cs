@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace ProductStoreEditor.Models
 {
-    public partial class ProductStoreDbContext : DbContext
+    public partial class ProductStoreDataBaseContext : DbContext
     {
-        public ProductStoreDbContext()
+        public ProductStoreDataBaseContext()
         {
         }
 
-        public ProductStoreDbContext(DbContextOptions<ProductStoreDbContext> options)
+        public ProductStoreDataBaseContext(DbContextOptions<ProductStoreDataBaseContext> options)
             : base(options)
         {
         }
@@ -27,7 +27,8 @@ namespace ProductStoreEditor.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server= LAPTOP-R6T9OC7R\\SQLEXPRESS;Database=ProductStoreDb; Trusted_Connection=True");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Server= LAPTOP-R6T9OC7R\\SQLEXPRESS;Database=ProductStoreDataBase; Trusted_Connection=True");
             }
         }
 

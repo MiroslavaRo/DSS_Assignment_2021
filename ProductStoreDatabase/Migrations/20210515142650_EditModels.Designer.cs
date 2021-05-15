@@ -9,9 +9,9 @@ using ProductStoreDatabase.Models;
 
 namespace ProductStoreDatabase.Migrations
 {
-    [DbContext(typeof(ProductStoreDb))]
-    [Migration("20210511200104_DeleteTypeFromProductTable")]
-    partial class DeleteTypeFromProductTable
+    [DbContext(typeof(ProductStoreDataBase))]
+    [Migration("20210515142650_EditModels")]
+    partial class EditModels
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -52,15 +52,10 @@ namespace ProductStoreDatabase.Migrations
                     b.Property<string>("ProductName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ProductTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SupplierId")
+                    b.Property<int?>("SupplierId")
                         .HasColumnType("int");
 
                     b.HasKey("ProductId");
-
-                    b.HasIndex("ProductTypeId");
 
                     b.HasIndex("SupplierId");
 
@@ -70,14 +65,12 @@ namespace ProductStoreDatabase.Migrations
                         new
                         {
                             ProductId = 1,
-                            PhotoFileName = "D:\\VUM STUDY\\1 year 2 semester\\DDS\\Assignment\\ProductPhotos\\prostomilk1.jpg",
                             ProductName = "Prostokvashino Milk 3.2%",
                             SupplierId = 2
                         },
                         new
                         {
                             ProductId = 2,
-                            PhotoFileName = "D:\\VUM STUDY\\1 year 2 semester\\DDS\\Assignment\\ProductPhotos\\ProstokvashinoCottageCheese.jpg",
                             ProductName = "Prostokvashino Cottage Cheese 5 %",
                             SupplierId = 2
                         });
@@ -173,7 +166,7 @@ namespace ProductStoreDatabase.Migrations
                     b.Property<string>("LogoFileName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ProductTypeId")
+                    b.Property<int?>("ProductTypeId")
                         .HasColumnType("int");
 
                     b.HasKey("SupplierId");
@@ -187,14 +180,12 @@ namespace ProductStoreDatabase.Migrations
                         {
                             SupplierId = 1,
                             Company = "Burum",
-                            LogoFileName = "D:\\VUM STUDY\\1 year 2 semester\\DDS\\Assignment\\Logos\\burum.jpg",
                             ProductTypeId = 11
                         },
                         new
                         {
                             SupplierId = 2,
                             Company = "Prostokvashino",
-                            LogoFileName = "D:\\VUM STUDY\\1 year 2 semester\\DDS\\Assignment\\Logos\\prostokvashino.jpg",
                             ProductTypeId = 3
                         },
                         new
@@ -296,24 +287,20 @@ namespace ProductStoreDatabase.Migrations
 
             modelBuilder.Entity("ProductStoreDatabase.Models.Product", b =>
                 {
-                    b.HasOne("ProductStoreDatabase.Models.ProductType", null)
+                    b.HasOne("ProductStoreDatabase.Models.Supplier", "Supplier")
                         .WithMany("Products")
-                        .HasForeignKey("ProductTypeId");
+                        .HasForeignKey("SupplierId");
 
-                    b.HasOne("ProductStoreDatabase.Models.Supplier", null)
-                        .WithMany("Products")
-                        .HasForeignKey("SupplierId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Supplier");
                 });
 
             modelBuilder.Entity("ProductStoreDatabase.Models.Supplier", b =>
                 {
-                    b.HasOne("ProductStoreDatabase.Models.ProductType", null)
+                    b.HasOne("ProductStoreDatabase.Models.ProductType", "ProductType")
                         .WithMany("Suppliers")
-                        .HasForeignKey("ProductTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProductTypeId");
+
+                    b.Navigation("ProductType");
                 });
 
             modelBuilder.Entity("ProductStoreDatabase.Models.User", b =>
@@ -332,8 +319,6 @@ namespace ProductStoreDatabase.Migrations
 
             modelBuilder.Entity("ProductStoreDatabase.Models.ProductType", b =>
                 {
-                    b.Navigation("Products");
-
                     b.Navigation("Suppliers");
                 });
 

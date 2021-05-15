@@ -2,10 +2,29 @@
 
 namespace ProductStoreDatabase.Migrations
 {
-    public partial class CreateDb : Migration
+    public partial class Tables : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AddColumn<string>(
+                name: "PhotoFileName",
+                table: "Products",
+                type: "nvarchar(max)",
+                nullable: true);
+
+            migrationBuilder.AddColumn<string>(
+                name: "ProductName",
+                table: "Products",
+                type: "nvarchar(max)",
+                nullable: true);
+
+            migrationBuilder.AddColumn<int>(
+                name: "SupplierId",
+                table: "Products",
+                type: "int",
+                nullable: false,
+                defaultValue: 0);
+
             migrationBuilder.CreateTable(
                 name: "Employees",
                 columns: table => new
@@ -75,39 +94,6 @@ namespace ProductStoreDatabase.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Products",
-                columns: table => new
-                {
-                    ProductId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SupplierId = table.Column<int>(type: "int", nullable: false),
-                    PhotoFileName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProductTypeId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Products", x => x.ProductId);
-                    table.ForeignKey(
-                        name: "FK_Products_ProductTypes_ProductTypeId",
-                        column: x => x.ProductTypeId,
-                        principalTable: "ProductTypes",
-                        principalColumn: "ProductTypeId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Products_Suppliers_SupplierId",
-                        column: x => x.SupplierId,
-                        principalTable: "Suppliers",
-                        principalColumn: "SupplierId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Products_ProductTypeId",
-                table: "Products",
-                column: "ProductTypeId");
-
             migrationBuilder.CreateIndex(
                 name: "IX_Products_SupplierId",
                 table: "Products",
@@ -122,24 +108,49 @@ namespace ProductStoreDatabase.Migrations
                 name: "IX_Users_EmployeeId",
                 table: "Users",
                 column: "EmployeeId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Products_Suppliers_SupplierId",
+                table: "Products",
+                column: "SupplierId",
+                principalTable: "Suppliers",
+                principalColumn: "SupplierId",
+                onDelete: ReferentialAction.Cascade);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Products");
-
-            migrationBuilder.DropTable(
-                name: "Users");
+            migrationBuilder.DropForeignKey(
+                name: "FK_Products_Suppliers_SupplierId",
+                table: "Products");
 
             migrationBuilder.DropTable(
                 name: "Suppliers");
 
             migrationBuilder.DropTable(
-                name: "Employees");
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "ProductTypes");
+
+            migrationBuilder.DropTable(
+                name: "Employees");
+
+            migrationBuilder.DropIndex(
+                name: "IX_Products_SupplierId",
+                table: "Products");
+
+            migrationBuilder.DropColumn(
+                name: "PhotoFileName",
+                table: "Products");
+
+            migrationBuilder.DropColumn(
+                name: "ProductName",
+                table: "Products");
+
+            migrationBuilder.DropColumn(
+                name: "SupplierId",
+                table: "Products");
         }
     }
 }

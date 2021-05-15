@@ -8,9 +8,9 @@ using ProductStoreDatabase.Models;
 
 namespace ProductStoreDatabase.Migrations
 {
-    [DbContext(typeof(ProductStoreDb))]
-    [Migration("20210511201244_unwantedColumnCleanup")]
-    partial class unwantedColumnCleanup
+    [DbContext(typeof(ProductStoreDataBase))]
+    [Migration("20210514215724_NoImages")]
+    partial class NoImages
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -64,14 +64,12 @@ namespace ProductStoreDatabase.Migrations
                         new
                         {
                             ProductId = 1,
-                            PhotoFileName = "D:\\VUM STUDY\\1 year 2 semester\\DDS\\Assignment\\ProductPhotos\\prostomilk1.jpg",
                             ProductName = "Prostokvashino Milk 3.2%",
                             SupplierId = 2
                         },
                         new
                         {
                             ProductId = 2,
-                            PhotoFileName = "D:\\VUM STUDY\\1 year 2 semester\\DDS\\Assignment\\ProductPhotos\\ProstokvashinoCottageCheese.jpg",
                             ProductName = "Prostokvashino Cottage Cheese 5 %",
                             SupplierId = 2
                         });
@@ -181,14 +179,12 @@ namespace ProductStoreDatabase.Migrations
                         {
                             SupplierId = 1,
                             Company = "Burum",
-                            LogoFileName = "D:\\VUM STUDY\\1 year 2 semester\\DDS\\Assignment\\Logos\\burum.jpg",
                             ProductTypeId = 11
                         },
                         new
                         {
                             SupplierId = 2,
                             Company = "Prostokvashino",
-                            LogoFileName = "D:\\VUM STUDY\\1 year 2 semester\\DDS\\Assignment\\Logos\\prostokvashino.jpg",
                             ProductTypeId = 3
                         },
                         new

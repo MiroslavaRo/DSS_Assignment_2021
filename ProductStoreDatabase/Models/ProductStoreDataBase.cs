@@ -5,16 +5,17 @@ using System.Text;
 
 namespace ProductStoreDatabase.Models
 {
-    public partial class ProductStoreDb : DbContext
+    public partial class ProductStoreDataBase : DbContext
     {
-        public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<Employee> Employees { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductType> ProductTypes { get; set; }
-        public DbSet<Employee> Employees { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }        
         public DbSet<User> Users { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server= LAPTOP-R6T9OC7R\SQLEXPRESS;Database=ProductStoreDb; Trusted_Connection=True");
+            optionsBuilder.UseSqlServer(@"Server= LAPTOP-R6T9OC7R\SQLEXPRESS;Database=ProductStoreDataBase; Trusted_Connection=True");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -43,16 +44,15 @@ namespace ProductStoreDatabase.Models
                 .HasData(new ProductType { ProductTypeId = 11, ProductTypeName = "Seafood" });
             modelBuilder.Entity<ProductType>()
                .HasData(new ProductType { ProductTypeId = 12, ProductTypeName = "Cereals" });
-            
-            
-            
-            modelBuilder.Entity<Supplier>()
-                .HasData(new Supplier { SupplierId = 1, Company = "Burum", ProductTypeId = 11, LogoFileName= "D:\\VUM STUDY\\1 year 2 semester\\DDS\\Assignment\\Logos\\burum.jpg" });
+
+
             
             modelBuilder.Entity<Supplier>()
-               .HasData(new Supplier { SupplierId = 2, Company = "Prostokvashino", ProductTypeId = 3, LogoFileName= "D:\\VUM STUDY\\1 year 2 semester\\DDS\\Assignment\\Logos\\prostokvashino.jpg" });
+                .HasData(new Supplier { SupplierId = 1, Company = "Burum", ProductTypeId = 11});
             modelBuilder.Entity<Supplier>()
-              .HasData(new Supplier { SupplierId = 3, Company = "H&S Bakery", ProductTypeId = 4});
+               .HasData(new Supplier { SupplierId = 2, Company = "Prostokvashino", ProductTypeId = 3 });
+            modelBuilder.Entity<Supplier>()
+              .HasData(new Supplier { SupplierId = 3, Company = "H&S Bakery", ProductTypeId = 4 });
             modelBuilder.Entity<Supplier>()
              .HasData(new Supplier { SupplierId = 4, Company = "Aryzita", ProductTypeId = 4 });
             modelBuilder.Entity<Supplier>()
@@ -68,26 +68,24 @@ namespace ProductStoreDatabase.Models
             modelBuilder.Entity<Supplier>()
              .HasData(new Supplier { SupplierId = 10, Company = "Dairy Pure", ProductTypeId = 3 });
             modelBuilder.Entity<Supplier>()
-             .HasData(new Supplier { SupplierId = 11, Company = "Mowi", ProductTypeId =11 });
+             .HasData(new Supplier { SupplierId = 11, Company = "Mowi", ProductTypeId = 11 });
             modelBuilder.Entity<Supplier>()
              .HasData(new Supplier { SupplierId = 12, Company = "Prima", ProductTypeId = 1 });
             modelBuilder.Entity<Supplier>()
-             .HasData(new Supplier { SupplierId = 13, Company = "Prima", ProductTypeId = 2 });            
+             .HasData(new Supplier { SupplierId = 13, Company = "Prima", ProductTypeId = 2 });
             modelBuilder.Entity<Supplier>()
              .HasData(new Supplier { SupplierId = 14, Company = "Tyson Product", ProductTypeId = 10 });
 
 
-
-            modelBuilder.Entity<Product>()
-             .HasData(new Product { ProductId=1,ProductName= "Prostokvashino Milk 3.2%", SupplierId=2,PhotoFileName= "D:\\VUM STUDY\\1 year 2 semester\\DDS\\Assignment\\ProductPhotos\\prostomilk1.jpg" });
-            modelBuilder.Entity<Product>()
-             .HasData(new Product { ProductId = 2, ProductName = "Prostokvashino Cottage Cheese 5 %", SupplierId = 2, PhotoFileName = "D:\\VUM STUDY\\1 year 2 semester\\DDS\\Assignment\\ProductPhotos\\ProstokvashinoCottageCheese.jpg" });
-
-
-
-
-
             
+            modelBuilder.Entity<Product>()
+             .HasData(new Product { ProductId = 1, ProductName = "Prostokvashino Milk 3.2%", SupplierId = 2});
+            modelBuilder.Entity<Product>()
+             .HasData(new Product { ProductId = 2, ProductName = "Prostokvashino Cottage Cheese 5 %", SupplierId = 2});
+            
+
+
+
         }
     }
 }

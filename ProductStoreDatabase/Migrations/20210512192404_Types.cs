@@ -2,7 +2,7 @@
 
 namespace ProductStoreDatabase.Migrations
 {
-    public partial class ProductType : Migration
+    public partial class Types : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

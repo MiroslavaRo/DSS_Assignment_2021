@@ -26,8 +26,15 @@ using ProductStoreEditor.Models;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 3 "D:\VUM STUDY\1 year 2 semester\DDS\Assignment\DSS_Assignment_2021\ProductStoreEditor\Views\_ViewImports.cshtml"
+using ProductStoreEditor.ViewModels;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"99464617055fdb505bb0bb7fd91f9b14f7b0d030", @"/Views/Home/Index.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"9a1a15cb54bef2b13f876be45942225176820c72", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"c96284a9127f8e09a4376cb05f0da36c3688b214", @"/Views/_ViewImports.cshtml")]
     public class Views_Home_Index : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         #pragma warning disable 1998

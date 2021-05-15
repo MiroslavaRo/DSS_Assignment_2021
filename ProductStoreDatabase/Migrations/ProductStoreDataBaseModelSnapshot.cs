@@ -3,17 +3,15 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProductStoreDatabase.Models;
 
 namespace ProductStoreDatabase.Migrations
 {
-    [DbContext(typeof(ProductStoreDb))]
-    [Migration("20210511191714_ProductType")]
-    partial class ProductType
+    [DbContext(typeof(ProductStoreDataBase))]
+    partial class ProductStoreDataBaseModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,19 +50,28 @@ namespace ProductStoreDatabase.Migrations
                     b.Property<string>("ProductName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ProductTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SupplierId")
+                    b.Property<int?>("SupplierId")
                         .HasColumnType("int");
 
                     b.HasKey("ProductId");
 
-                    b.HasIndex("ProductTypeId");
-
                     b.HasIndex("SupplierId");
 
                     b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            ProductId = 1,
+                            ProductName = "Prostokvashino Milk 3.2%",
+                            SupplierId = 2
+                        },
+                        new
+                        {
+                            ProductId = 2,
+                            ProductName = "Prostokvashino Cottage Cheese 5 %",
+                            SupplierId = 2
+                        });
                 });
 
             modelBuilder.Entity("ProductStoreDatabase.Models.ProductType", b =>
@@ -157,7 +164,7 @@ namespace ProductStoreDatabase.Migrations
                     b.Property<string>("LogoFileName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ProductTypeId")
+                    b.Property<int?>("ProductTypeId")
                         .HasColumnType("int");
 
                     b.HasKey("SupplierId");
@@ -165,6 +172,92 @@ namespace ProductStoreDatabase.Migrations
                     b.HasIndex("ProductTypeId");
 
                     b.ToTable("Suppliers");
+
+                    b.HasData(
+                        new
+                        {
+                            SupplierId = 1,
+                            Company = "Burum",
+                            ProductTypeId = 11
+                        },
+                        new
+                        {
+                            SupplierId = 2,
+                            Company = "Prostokvashino",
+                            ProductTypeId = 3
+                        },
+                        new
+                        {
+                            SupplierId = 3,
+                            Company = "H&S Bakery",
+                            ProductTypeId = 4
+                        },
+                        new
+                        {
+                            SupplierId = 4,
+                            Company = "Aryzita",
+                            ProductTypeId = 4
+                        },
+                        new
+                        {
+                            SupplierId = 5,
+                            Company = "Bacardi",
+                            ProductTypeId = 6
+                        },
+                        new
+                        {
+                            SupplierId = 6,
+                            Company = "Corona",
+                            ProductTypeId = 6
+                        },
+                        new
+                        {
+                            SupplierId = 7,
+                            Company = "Nescafe",
+                            ProductTypeId = 5
+                        },
+                        new
+                        {
+                            SupplierId = 8,
+                            Company = "Nesquik",
+                            ProductTypeId = 5
+                        },
+                        new
+                        {
+                            SupplierId = 9,
+                            Company = "Maruha Nichiro",
+                            ProductTypeId = 11
+                        },
+                        new
+                        {
+                            SupplierId = 10,
+                            Company = "Dairy Pure",
+                            ProductTypeId = 3
+                        },
+                        new
+                        {
+                            SupplierId = 11,
+                            Company = "Mowi",
+                            ProductTypeId = 11
+                        },
+                        new
+                        {
+                            SupplierId = 12,
+                            Company = "Prima",
+                            ProductTypeId = 1
+                        },
+                        new
+                        {
+                            SupplierId = 13,
+                            Company = "Prima",
+                            ProductTypeId = 2
+                        },
+                        new
+                        {
+                            SupplierId = 14,
+                            Company = "Tyson Product",
+                            ProductTypeId = 10
+                        });
                 });
 
             modelBuilder.Entity("ProductStoreDatabase.Models.User", b =>
@@ -192,24 +285,20 @@ namespace ProductStoreDatabase.Migrations
 
             modelBuilder.Entity("ProductStoreDatabase.Models.Product", b =>
                 {
-                    b.HasOne("ProductStoreDatabase.Models.ProductType", null)
+                    b.HasOne("ProductStoreDatabase.Models.Supplier", "Supplier")
                         .WithMany("Products")
-                        .HasForeignKey("ProductTypeId");
+                        .HasForeignKey("SupplierId");
 
-                    b.HasOne("ProductStoreDatabase.Models.Supplier", null)
-                        .WithMany("Products")
-                        .HasForeignKey("SupplierId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Supplier");
                 });
 
             modelBuilder.Entity("ProductStoreDatabase.Models.Supplier", b =>
                 {
-                    b.HasOne("ProductStoreDatabase.Models.ProductType", null)
+                    b.HasOne("ProductStoreDatabase.Models.ProductType", "ProductType")
                         .WithMany("Suppliers")
-                        .HasForeignKey("ProductTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProductTypeId");
+
+                    b.Navigation("ProductType");
                 });
 
             modelBuilder.Entity("ProductStoreDatabase.Models.User", b =>
@@ -228,8 +317,6 @@ namespace ProductStoreDatabase.Migrations
 
             modelBuilder.Entity("ProductStoreDatabase.Models.ProductType", b =>
                 {
-                    b.Navigation("Products");
-
                     b.Navigation("Suppliers");
                 });
 
