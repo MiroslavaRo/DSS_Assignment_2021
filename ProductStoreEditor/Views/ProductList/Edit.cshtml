@@ -38,9 +38,16 @@
             <span asp-validation-for="ProductToBeEdited.SupplierId" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <img src="~/Images/ProductPhotos/@Model.ProductToBeEdited.PhotoFileName" width="150" height="150" />
-            <input type="hidden" asp-for="ProductToBeEdited.PhotoFileName" />
+            @if (Model.ProductToBeEdited.PhotoFileName == null)
+            {
+                <img src="/images/notfound.png" alt="image not found" width="50" height="50">
+            }
+            else
+            { 
+                <img src="Images/Get?productId=@Model.ProductToBeEdited.ProductId&fileName=@Model.ProductToBeEdited.PhotoFileName" alt="@Model.ProductToBeEdited.ProductName" width="150" height="150" />
 
+            }
+            <input type="hidden" asp-for="ProductToBeEdited.PhotoFileName" />
         </div>
         <div class="form-group">
             <input type="submit" value="Save" class="btn btn-primary" />

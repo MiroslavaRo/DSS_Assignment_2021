@@ -35,13 +35,6 @@ namespace ProductStoreEditor.Controllers
         {
             List<Product> products = context.Products
                 .Include(a => a.Supplier).ToList();
-            foreach(var p in products)
-            {
-                if (p.PhotoFileName == null)
-                {
-                    p.PhotoFileName = "NotFound.png";
-                }
-            }
 
             return View(products);
         }
@@ -52,11 +45,7 @@ namespace ProductStoreEditor.Controllers
             Product product = context.Products
                  .Include(a => a.Supplier)
                 .FirstOrDefault(a => a.ProductId == id);
-
-            if (product.PhotoFileName == null)
-            {
-                product.PhotoFileName = "NotFound.png";
-            }
+           
             return View(product);
 
 
@@ -65,42 +54,68 @@ namespace ProductStoreEditor.Controllers
 
         public IActionResult Create()
         {
-            Product newproduct = new Product();
-            newproduct.Supplier = (Supplier)context.Suppliers.ToList().Select(a => new SelectListItem() { Text = a.Company, Value = a.SupplierId.ToString() });
+            CreateProductViewModel createProductViewModel = new CreateProductViewModel();
+            createProductViewModel.Suppliers = GetSuppliers();
 
-
-            return View(newproduct);
+            return View(createProductViewModel);
         }
 
 
         [HttpPost]
-        public IActionResult Create(Product model, IFormFile photo)
-        {
+        public IActionResult Create(CreateProductViewModel model, IFormFile photo)
+        {      
+
             Product product = new Product();
             product.ProductName = model.ProductName;
 
+
             Supplier supplier = new Supplier();
-            supplier.SupplierId = (int)model.SupplierId;
+            supplier.SupplierId = model.SelectedSupplierId;
             product.SupplierId = supplier.SupplierId;
 
             if (photo != null)
-            {
-                
+            {/*
                 string fileName = product.ProductName+".jpg";
-                string filePath = Path.Combine(hostEnvironment.WebRootPath, "/Images/ProductPhotos/",  fileName);
+                string filePath = Path.Combine(hostEnvironment.WebRootPath, "wwwroot", "Images", "ProductPhotos", fileName);
                 product.PhotoFileName = fileName;
-
-                using (Stream fileStream = new FileStream(filePath, FileMode.Create))
+                using (FileStream fileStream = System.IO.File.Create(filePath))
                 {
                     photo.CopyTo(fileStream);
+                }*/
+                // context.Products.Add(product);
+                //  context.SaveChanges();
+                string imagesPath = configuration.GetValue<string>("ProductPhotosLocation");
 
+
+                string directoryPath = Path.Combine(imagesPath, product.ProductId.ToString());
+                if (!Directory.Exists(directoryPath))
+                {
+                    Directory.CreateDirectory(directoryPath);
                 }
 
-                context.Products.Add(product);
-                context.SaveChanges();
+                string fileName = string.Format("{0}.jpg", Path.GetFileNameWithoutExtension(Path.GetRandomFileName()));
+                string filePath = Path.Combine(directoryPath, fileName);
 
+                try
+                {
+                    using (Stream fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        photo.CopyTo(fileStream);
+                    }
+                    product.PhotoFileName = fileName;
+
+                  
+                   
+
+                }
+                catch
+                {
+                    //rollback
+                    RedirectToAction("Error", "Home");
+                }
             }
-
+            context.Products.Add(product);
+            context.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -114,17 +129,13 @@ namespace ProductStoreEditor.Controllers
             ProductListEditViewModel viewModel = new ProductListEditViewModel();
             viewModel.ProductToBeEdited = product;
             viewModel.Suppliers = GetSuppliers();
-            if (product.PhotoFileName == null)
-            {
-                viewModel.ProductToBeEdited.PhotoFileName = "NotFound.png";
-            }
 
             return View(viewModel);
         }
 
 
         [HttpPost]
-        public IActionResult Edit(ProductListEditViewModel viewModel)
+        public IActionResult Edit(ProductListEditViewModel viewModel, IFormFile photo)
         {
             
             viewModel.Suppliers = GetSuppliers();
@@ -138,11 +149,11 @@ namespace ProductStoreEditor.Controllers
                 Product editedProduct = viewModel.ProductToBeEdited;
 
                 Product originalProduct = context.Products.FirstOrDefault(a => a.ProductId == editedProduct.ProductId);
-
                 originalProduct.ProductName = editedProduct.ProductName;
                 originalProduct.PhotoFileName = editedProduct.PhotoFileName;
                 originalProduct.SupplierId = editedProduct.SupplierId;
                 originalProduct.Supplier = editedProduct.Supplier;
+                               
 
 
                 viewModel.SuccessMessageVisible = true;
@@ -158,10 +169,6 @@ namespace ProductStoreEditor.Controllers
                 .Include(a => a.Supplier)
                .FirstOrDefault(a => a.ProductId == id);
 
-            if (product.PhotoFileName == null)
-            {
-                product.PhotoFileName = "NotFound.png";
-            }
             return View(product);
 
 
@@ -173,14 +180,23 @@ namespace ProductStoreEditor.Controllers
         {
             if (product.PhotoFileName != null)
             {
-                var imagePath = Path.Combine(hostEnvironment.WebRootPath, "Images", "ProductPhotos", product.PhotoFileName);
+                string imagesPath = configuration.GetValue<string>("ProductPhotosLocation");
+                string directoryPath = Path.Combine(imagesPath, product.ProductId.ToString());
+               
+              /*  string imagePath = Path.Combine(directoryPath, product.PhotoFileName);
+
                 if (System.IO.File.Exists(imagePath))
                 {
                     System.IO.File.Delete(imagePath);
+                }*/
+                if (Directory.Exists(directoryPath))
+                {
+                    Directory.Delete(directoryPath);
                 }
-                   
+
+
             }
-            
+
             context.Products.Remove(product);
             context.SaveChanges();
 

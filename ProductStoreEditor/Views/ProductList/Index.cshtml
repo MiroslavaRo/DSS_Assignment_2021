@@ -38,7 +38,15 @@
                 </td>
 
                 <td>
-                    <img src="~/Images/ProductPhotos/@item.PhotoFileName" width="50" height="50" />
+                    @if (item.PhotoFileName == null)
+                    {
+                        <img src="/images/notfound.png" alt="image not found" width="50" height="50">
+                    }
+                    else
+                    {
+                        <img src="D:\\VUM STUDY\\1 year 2 semester\\DDS\\Assignment\\ProductPhotos\\@item.ProductId\\@item.PhotoFileName" alt="@item.ProductName" width="50" height="50" />
+
+                    }
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
