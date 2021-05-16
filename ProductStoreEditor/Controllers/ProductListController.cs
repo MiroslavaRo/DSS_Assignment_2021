@@ -161,7 +161,7 @@ namespace ProductStoreEditor.Controllers
         [HttpPost]
         public ActionResult Delete(int id, IFormCollection collection)
         {
-            return View();
+            return View(); 
 
         }
 
