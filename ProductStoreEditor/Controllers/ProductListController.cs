@@ -50,8 +50,13 @@ namespace ProductStoreEditor.Controllers
         public ActionResult Details(int id)
         {
             Product product = context.Products
+                 .Include(a => a.Supplier)
                 .FirstOrDefault(a => a.ProductId == id);
 
+            if (product.PhotoFileName == null)
+            {
+                product.PhotoFileName = "NotFound.png";
+            }
             return View(product);
 
 
@@ -132,7 +137,7 @@ namespace ProductStoreEditor.Controllers
                
                 Product editedProduct = viewModel.ProductToBeEdited;
 
-                Product originalProduct = context.Products.Include(a => a.Supplier).First(a => a.ProductId == editedProduct.ProductId);
+                Product originalProduct = context.Products.FirstOrDefault(a => a.ProductId == editedProduct.ProductId);
 
                 originalProduct.ProductName = editedProduct.ProductName;
                 originalProduct.PhotoFileName = editedProduct.PhotoFileName;
