@@ -86,8 +86,8 @@ namespace ProductStoreEditor.Controllers
             if (photo != null)
             {
                 
-                string fileName = product.ProductId+".jpg";
-                string filePath = Path.Combine(hostEnvironment.WebRootPath + "/Images/ProductPhotos/",  fileName);
+                string fileName = product.ProductName+".jpg";
+                string filePath = Path.Combine(hostEnvironment.WebRootPath, "/Images/ProductPhotos/",  fileName);
                 product.PhotoFileName = fileName;
 
                 using (Stream fileStream = new FileStream(filePath, FileMode.Create))
@@ -154,14 +154,37 @@ namespace ProductStoreEditor.Controllers
 
         public ActionResult Delete(int id)
         {
-            return View();
+            Product product = context.Products
+                .Include(a => a.Supplier)
+               .FirstOrDefault(a => a.ProductId == id);
+
+            if (product.PhotoFileName == null)
+            {
+                product.PhotoFileName = "NotFound.png";
+            }
+            return View(product);
+
+
         }
 
 
         [HttpPost]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(Product product)
         {
-            return View(); 
+            if (product.PhotoFileName != null)
+            {
+                var imagePath = Path.Combine(hostEnvironment.WebRootPath, "Images", "ProductPhotos", product.PhotoFileName);
+                if (System.IO.File.Exists(imagePath))
+                {
+                    System.IO.File.Delete(imagePath);
+                }
+                   
+            }
+            
+            context.Products.Remove(product);
+            context.SaveChanges();
+
+            return RedirectToAction(nameof(Index));
 
         }
 
