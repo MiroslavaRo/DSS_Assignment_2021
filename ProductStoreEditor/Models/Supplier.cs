@@ -19,6 +19,5 @@ namespace ProductStoreEditor.Models
 
         public virtual ProductType ProductType { get; set; }
         public virtual ICollection<Product> Products { get; set; }
-
     }
 }

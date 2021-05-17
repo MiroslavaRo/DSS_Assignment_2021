@@ -40,11 +40,12 @@
                 <td>
                     @if (item.PhotoFileName == null)
                     {
-                        <img src="/images/notfound.png" alt="image not found" width="50" height="50">
+                        <img src="~/Images/NotFound.png" alt="image not found" width="50" height="50">
                     }
                     else
                     {
-                        <img src="D:\\VUM STUDY\\1 year 2 semester\\DDS\\Assignment\\ProductPhotos\\@item.ProductId\\@item.PhotoFileName" alt="@item.ProductName" width="50" height="50" />
+
+                        <img src="~/Images/ProductPhotos/@item.PhotoFileName"  alt="@item.PhotoFileName" width="50" height="50" />
 
                     }
                 </td>

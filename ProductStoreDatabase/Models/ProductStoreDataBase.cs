@@ -7,7 +7,7 @@ namespace ProductStoreDatabase.Models
 {
     public partial class ProductStoreDataBase : DbContext
     {
-        public DbSet<Employee> Employees { get; set; }
+        public DbSet<Role> Roles { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductType> ProductTypes { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }        
@@ -79,11 +79,37 @@ namespace ProductStoreDatabase.Models
 
             
             modelBuilder.Entity<Product>()
-             .HasData(new Product { ProductId = 1, ProductName = "Prostokvashino Milk 3.2%", SupplierId = 2});
+             .HasData(new Product { ProductId = 1, ProductName = "Prostokvashino Milk 3.2%", SupplierId = 2, PhotoFileName= "1.jpg" });
             modelBuilder.Entity<Product>()
-             .HasData(new Product { ProductId = 2, ProductName = "Prostokvashino Cottage Cheese 5 %", SupplierId = 2});
-            
+             .HasData(new Product { ProductId = 2, ProductName = "Prostokvashino Cottage Cheese 5 %", SupplierId = 2, PhotoFileName = "2.jpg" });
+            modelBuilder.Entity<Product>()
+            .HasData(new Product { ProductId = 3, ProductName = "Columbia Coffee", SupplierId = 7, PhotoFileName = null });
 
+
+
+            modelBuilder.Entity<Role>()
+            .HasData(new Role { RoleId=1, RoleName="Admin"});
+            modelBuilder.Entity<Role>()
+             .HasData(new Role { RoleId = 2, RoleName = "User" });
+            /*
+            UserNames: Passwords 
+            
+             Maria98: TFgDmm  
+            GrigorIus: HopeGg
+            LindaCole:  pasSword   -admin
+            John Blitz:  YokH
+             
+             
+             */
+
+            modelBuilder.Entity<User>()
+         .HasData(new User { UserId=1, UserName= "Maria98", Password= "TFgDmm", RoleId=2});
+            modelBuilder.Entity<User>()
+         .HasData(new User { UserId = 2, UserName = "GrigorIus", Password = "HopeGg", RoleId = 2 });
+            modelBuilder.Entity<User>()
+         .HasData(new User { UserId = 3, UserName = "LindaCole", Password = "pasSword", RoleId = 1 });
+            modelBuilder.Entity<User>()
+         .HasData(new User { UserId = 4, UserName = "John Blitz", Password = "YokH", RoleId = 2 });
 
 
         }

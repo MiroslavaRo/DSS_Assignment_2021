@@ -35,7 +35,7 @@ namespace ProductStoreEditor.Controllers
         {
             List<Product> products = context.Products
                 .Include(a => a.Supplier).ToList();
-
+           
             return View(products);
         }
 
@@ -72,7 +72,8 @@ namespace ProductStoreEditor.Controllers
             Supplier supplier = new Supplier();
             supplier.SupplierId = model.SelectedSupplierId;
             product.SupplierId = supplier.SupplierId;
-
+            #region 
+            /*
             if (photo != null)
             {/*
                 string fileName = product.ProductName+".jpg";
@@ -81,7 +82,7 @@ namespace ProductStoreEditor.Controllers
                 using (FileStream fileStream = System.IO.File.Create(filePath))
                 {
                     photo.CopyTo(fileStream);
-                }*/
+                }
                 // context.Products.Add(product);
                 //  context.SaveChanges();
                 string imagesPath = configuration.GetValue<string>("ProductPhotosLocation");
@@ -95,7 +96,7 @@ namespace ProductStoreEditor.Controllers
 
                 string fileName = string.Format("{0}.jpg", Path.GetFileNameWithoutExtension(Path.GetRandomFileName()));
                 string filePath = Path.Combine(directoryPath, fileName);
-
+                /*
                 try
                 {
                     using (Stream fileStream = new FileStream(filePath, FileMode.Create))
@@ -103,17 +104,56 @@ namespace ProductStoreEditor.Controllers
                         photo.CopyTo(fileStream);
                     }
                     product.PhotoFileName = fileName;
-
-                  
-                   
-
                 }
                 catch
                 {
                     //rollback
                     RedirectToAction("Error", "Home");
                 }
+                using (Stream fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    photo.CopyTo(fileStream);
+                }
+                product.PhotoFileName = fileName;
             }
+        */
+            #endregion
+
+            #region
+            /*
+            if (photo.FileName!=null)
+            {
+                //Save image to wwwroot/image
+                // string wwwRootPath = hostEnvironment.WebRootPath;
+               // string fileName = Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
+                string extension = Path.GetExtension(photo.FileName);
+                /*
+                string imagesPath = wwwRootPath + "/Images/";
+                string directoryPath = Path.Combine(imagesPath, product.ProductId.ToString());
+                
+                string imagesPath = wwwRootPath + "/Images/ProductPhotos"+ product.ProductId.ToString();
+                if (!Directory.Exists(imagesPath))
+                {
+                    Directory.CreateDirectory(imagesPath);
+                }
+                
+                string imagesPath = "D:/VUM STUDY/1 year 2 semester/DDS/Assignment/DSS_Assignment_2021/ProductStoreEditor/wwwroot/Images/ProductPhotos/";
+
+                // fileName = product.ProductId.ToString() + extension;
+                product.PhotoFileName = product.ProductId.ToString() + extension;
+
+                string fileName = product.PhotoFileName;
+                string filePath = Path.Combine(imagesPath, fileName);
+                using (Stream fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    photo.CopyTo(fileStream);
+                }
+                context.Products.Add(product);
+                context.SaveChanges();
+            }
+        */
+            #endregion
+
             context.Products.Add(product);
             context.SaveChanges();
             return RedirectToAction("Index");
@@ -155,7 +195,6 @@ namespace ProductStoreEditor.Controllers
                 originalProduct.Supplier = editedProduct.Supplier;
                                
 
-
                 viewModel.SuccessMessageVisible = true;
                 context.SaveChanges();
             }
@@ -178,23 +217,32 @@ namespace ProductStoreEditor.Controllers
         [HttpPost]
         public ActionResult Delete(Product product)
         {
+            #region
+            /*
             if (product.PhotoFileName != null)
             {
                 string imagesPath = configuration.GetValue<string>("ProductPhotosLocation");
                 string directoryPath = Path.Combine(imagesPath, product.ProductId.ToString());
-               
-              /*  string imagePath = Path.Combine(directoryPath, product.PhotoFileName);
 
+                /*  string imagePath = Path.Combine(directoryPath, product.PhotoFileName);
+
+                  if (System.IO.File.Exists(imagePath))
+                  {
+                      System.IO.File.Delete(imagePath);
+                  }
+                  if (Directory.Exists(directoryPath))
+                  {
+                      Directory.Delete(directoryPath);
+                  }
+            }*/
+#endregion
+                if (product.PhotoFileName != null)
+            {
+                var imagePath = Path.Combine(hostEnvironment.WebRootPath, "Images", product.PhotoFileName);
                 if (System.IO.File.Exists(imagePath))
                 {
                     System.IO.File.Delete(imagePath);
-                }*/
-                if (Directory.Exists(directoryPath))
-                {
-                    Directory.Delete(directoryPath);
                 }
-
-
             }
 
             context.Products.Remove(product);

@@ -40,12 +40,11 @@
         <div class="form-group">
             @if (Model.ProductToBeEdited.PhotoFileName == null)
             {
-                <img src="/images/notfound.png" alt="image not found" width="50" height="50">
+                <img src="/Images/NotFound.png" alt="image not found" width="50" height="50">
             }
             else
-            { 
-                <img src="Images/Get?productId=@Model.ProductToBeEdited.ProductId&fileName=@Model.ProductToBeEdited.PhotoFileName" alt="@Model.ProductToBeEdited.ProductName" width="150" height="150" />
-
+            {
+                <img src="~/Images/ProductPhotos/@Model.ProductToBeEdited.PhotoFileName" alt="@Model.ProductToBeEdited.PhotoFileName" width="150" height="150" />
             }
             <input type="hidden" asp-for="ProductToBeEdited.PhotoFileName" />
         </div>

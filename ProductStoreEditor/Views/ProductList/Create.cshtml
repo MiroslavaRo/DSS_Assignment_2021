@@ -14,26 +14,40 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="@Model.ProductName" class="control-label">Product Name</label>
+                <label asp-for="@Model.ProductName" class="control-label"></label>
                 <input asp-for="@Model.ProductName" class="form-control" />
                 <span asp-validation-for="@Model.ProductName" class="text-danger"></span>
             </div>
-        <div class="form-group">
-            <label asp-for="@Model.SelectedSupplierId" class="control-label"></label>
-            <select class="form-control" asp-for="SelectedSupplierId" asp-items="Model.Suppliers">
-                <option>Select Company</option>
-            </select>
-            <span asp-validation-for="@Model.SelectedSupplierId" class="text-danger"></span>
-        </div>
+            <div class="form-group">
+                <label asp-for="@Model.SelectedSupplierId" class="control-label"></label>
+                <select class="form-control" asp-for="SelectedSupplierId" asp-items="Model.Suppliers">
+                    <option>Select Company</option>
+                </select>
+                <br />
+                <span asp-validation-for="@Model.SelectedSupplierId" class="text-danger"></span>
+            </div>
+            <!--
 
-        <div class="form-group">
-            <label for="fileUpload">Product Photo</label>
-            <input type="file" name="photo" class="form-control-file" id="fileUpload" />
-        </div>
+    <div class="form-group">
+        <label asp-for="Model.ImageFile" class="control-label"></label>
+        <input asp-for="Model.ImageFile" class="form-control-file" name="photo" accept="image/*" />
+        <br />
+        <span asp-validation-for="Model.ImageFile" class="text-danger"></span>
+    </div>
+         -->
+            <!--
+            <div class="form-group">
+                <label for="fileUpload">Product Photo</label>
+                <input type="file" name="photo" class="form-control-file" id="fileUpload" accept="image/*" />
+                <br />
+                <span for="fileUpload" class="text-danger"></span> 
+            </div>
+            -->
 
-        <div class="form-group">
-            <input type="submit" value="Save" class="btn btn-primary" />
-        </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
         </form>
     </div>
 </div>

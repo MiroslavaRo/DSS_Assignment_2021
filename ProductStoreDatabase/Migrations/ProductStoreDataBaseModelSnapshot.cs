@@ -19,24 +19,6 @@ namespace ProductStoreDatabase.Migrations
                 .HasAnnotation("ProductVersion", "5.0.6")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("ProductStoreDatabase.Models.Employee", b =>
-                {
-                    b.Property<int>("EmployeeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("EmployeeName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Position")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("EmployeeId");
-
-                    b.ToTable("Employees");
-                });
-
             modelBuilder.Entity("ProductStoreDatabase.Models.Product", b =>
                 {
                     b.Property<int>("ProductId")
@@ -63,12 +45,14 @@ namespace ProductStoreDatabase.Migrations
                         new
                         {
                             ProductId = 1,
+                            PhotoFileName = "1.jpg",
                             ProductName = "Prostokvashino Milk 3.2%",
                             SupplierId = 2
                         },
                         new
                         {
                             ProductId = 2,
+                            PhotoFileName = "2.jpg",
                             ProductName = "Prostokvashino Cottage Cheese 5 %",
                             SupplierId = 2
                         });
@@ -148,6 +132,33 @@ namespace ProductStoreDatabase.Migrations
                         {
                             ProductTypeId = 12,
                             ProductTypeName = "Cereals"
+                        });
+                });
+
+            modelBuilder.Entity("ProductStoreDatabase.Models.Role", b =>
+                {
+                    b.Property<int>("RoleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("RoleName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("RoleId");
+
+                    b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            RoleId = 1,
+                            RoleName = "Admin"
+                        },
+                        new
+                        {
+                            RoleId = 2,
+                            RoleName = "User"
                         });
                 });
 
@@ -267,20 +278,50 @@ namespace ProductStoreDatabase.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("RoleId")
+                        .HasColumnType("int");
 
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserId");
 
-                    b.HasIndex("EmployeeId");
+                    b.HasIndex("RoleId");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            Password = "TFgDmm",
+                            RoleId = 2,
+                            UserName = "Maria98"
+                        },
+                        new
+                        {
+                            UserId = 2,
+                            Password = "HopeGg",
+                            RoleId = 2,
+                            UserName = "GrigorIus"
+                        },
+                        new
+                        {
+                            UserId = 3,
+                            Password = "pasSword",
+                            RoleId = 1,
+                            UserName = "LindaCole"
+                        },
+                        new
+                        {
+                            UserId = 4,
+                            Password = "YokH",
+                            RoleId = 2,
+                            UserName = "John Blitz"
+                        });
                 });
 
             modelBuilder.Entity("ProductStoreDatabase.Models.Product", b =>
@@ -303,21 +344,21 @@ namespace ProductStoreDatabase.Migrations
 
             modelBuilder.Entity("ProductStoreDatabase.Models.User", b =>
                 {
-                    b.HasOne("ProductStoreDatabase.Models.Employee", null)
+                    b.HasOne("ProductStoreDatabase.Models.Role", "Role")
                         .WithMany("Users")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
+                        .HasForeignKey("RoleId");
 
-            modelBuilder.Entity("ProductStoreDatabase.Models.Employee", b =>
-                {
-                    b.Navigation("Users");
+                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("ProductStoreDatabase.Models.ProductType", b =>
                 {
                     b.Navigation("Suppliers");
+                });
+
+            modelBuilder.Entity("ProductStoreDatabase.Models.Role", b =>
+                {
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("ProductStoreDatabase.Models.Supplier", b =>
