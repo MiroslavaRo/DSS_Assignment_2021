@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ProductStoreEditor.ViewModels
+namespace ProductMarketEditor.ViewModels
 {
     public class CreateProductViewModel
     {

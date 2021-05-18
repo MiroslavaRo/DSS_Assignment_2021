@@ -1,29 +1,26 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using ProductMarketEditor.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ProductMarketEditor.Models
+namespace ProductMarketEditor.Data
 {
     public class ProductMarketDBContext : DbContext
     {
         public ProductMarketDBContext(DbContextOptions<ProductMarketDBContext> options) : base(options)
-        {}
-
+        { }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductType> ProductTypes { get; set; }
-        public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }        
         public DbSet<User> Users { get; set; }
-        #region
         /*
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer("Server= LAPTOP-R6T9OC7R\\SQLEXPRESS;Database=ProductMarketDBContext; Trusted_Connection=True");
-            }
-        }
+            optionsBuilder.UseSqlServer(@"Server =(local)\\sqlexpress; Database = ProductMarketDB; Trusted_Connection = True; MultipleActiveResultSets = True; ");
+        }*/
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             
@@ -84,21 +81,21 @@ namespace ProductMarketEditor.Models
              .HasData(new Supplier { SupplierId = 14, Company = "Tyson Product", ProductTypeId = 10 });
 
 
+
+       
+           
+            modelBuilder.Entity<Product>()
+             .HasData(new Product { ProductId = 1, ProductName = "Prostokvashino Milk 3.2%", SupplierId = 2, ImageFileName = "1.jpg" });
+            modelBuilder.Entity<Product>()
+             .HasData(new Product { ProductId = 2, ProductName = "Prostokvashino Cottage Cheese 5 %", SupplierId = 2, ImageFileName = "2.jpg" });
+
             
-            modelBuilder.Entity<Product>()
-             .HasData(new Product { ProductId = 1, ProductName = "Prostokvashino Milk 3.2%", SupplierId = 2, PhotoFileName= "1.jpg" });
-            modelBuilder.Entity<Product>()
-             .HasData(new Product { ProductId = 2, ProductName = "Prostokvashino Cottage Cheese 5 %", SupplierId = 2, PhotoFileName = "2.jpg" });
-            modelBuilder.Entity<Product>()
-            .HasData(new Product { ProductId = 3, ProductName = "Columbia Coffee", SupplierId = 7, PhotoFileName = null });
-
-
 
             modelBuilder.Entity<Role>()
             .HasData(new Role { RoleId=1, RoleName="Admin"});
             modelBuilder.Entity<Role>()
              .HasData(new Role { RoleId = 2, RoleName = "User" });
-            
+            /*
             UserNames: Passwords 
             
              Maria98: TFgDmm  
@@ -107,7 +104,7 @@ namespace ProductMarketEditor.Models
             John Blitz:  YokH
              
              
-             
+             */
 
             modelBuilder.Entity<User>()
          .HasData(new User { UserId=1, UserName= "Maria98", Password= "TFgDmm", RoleId=2});
@@ -120,7 +117,5 @@ namespace ProductMarketEditor.Models
 
 
         }
-    */
-        #endregion
     }
 }

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace ProductStoreEditor.Controllers
 {
+    /*
     public class AccountsController : Controller
     {
         private ProductStoreDataBaseContext context;
@@ -53,5 +54,5 @@ namespace ProductStoreEditor.Controllers
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index", "Home");
         }
-    }
+    }*/
 }
