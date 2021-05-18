@@ -120,42 +120,40 @@ namespace ProductStoreEditor.Controllers
             #endregion
 
             #region
-            /*
-            if (photo.FileName!=null)
+
+            if (ModelState.IsValid)
             {
-                //Save image to wwwroot/image
-                // string wwwRootPath = hostEnvironment.WebRootPath;
-               // string fileName = Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
-                string extension = Path.GetExtension(photo.FileName);
-                /*
-                string imagesPath = wwwRootPath + "/Images/";
-                string directoryPath = Path.Combine(imagesPath, product.ProductId.ToString());
+                string wwwRootPath = hostEnvironment.WebRootPath;
+                string fileName = Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
+                string extension = Path.GetExtension(model.ImageFile.FileName);
                 
-                string imagesPath = wwwRootPath + "/Images/ProductPhotos"+ product.ProductId.ToString();
+                string imagesPath = wwwRootPath + "/Images/ProductPhotos/";
+               /* string directoryPath = Path.Combine(imagesPath, product.ProductId.ToString());
+                
+                string imagesPath = wwwRootPath + "/Images/ProductPhotos/"+ product.ProductId.ToString();
                 if (!Directory.Exists(imagesPath))
                 {
                     Directory.CreateDirectory(imagesPath);
                 }
-                
-                string imagesPath = "D:/VUM STUDY/1 year 2 semester/DDS/Assignment/DSS_Assignment_2021/ProductStoreEditor/wwwroot/Images/ProductPhotos/";
+                */
+              //  string imagesPath = "D:/VUM STUDY/1 year 2 semester/DDS/Assignment/DSS_Assignment_2021/ProductStoreEditor/wwwroot/Images/ProductPhotos/";
 
-                // fileName = product.ProductId.ToString() + extension;
-                product.PhotoFileName = product.ProductId.ToString() + extension;
+                fileName = product.ProductId.ToString() + extension;
+                product.ImageFileName = product.ProductId.ToString() + extension;
 
-                string fileName = product.PhotoFileName;
                 string filePath = Path.Combine(imagesPath, fileName);
                 using (Stream fileStream = new FileStream(filePath, FileMode.Create))
                 {
-                    photo.CopyTo(fileStream);
+                    model.ImageFile.CopyTo(fileStream);
                 }
                 context.Products.Add(product);
                 context.SaveChanges();
             }
-        */
+        
             #endregion
 
-            context.Products.Add(product);
-            context.SaveChanges();
+           // context.Products.Add(product);
+            //context.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -175,7 +173,7 @@ namespace ProductStoreEditor.Controllers
 
 
         [HttpPost]
-        public IActionResult Edit(ProductListEditViewModel viewModel, IFormFile photo)
+        public IActionResult Edit(ProductListEditViewModel viewModel)
         {
             
             viewModel.Suppliers = GetSuppliers();
@@ -190,7 +188,7 @@ namespace ProductStoreEditor.Controllers
 
                 Product originalProduct = context.Products.FirstOrDefault(a => a.ProductId == editedProduct.ProductId);
                 originalProduct.ProductName = editedProduct.ProductName;
-                originalProduct.ImageFile = editedProduct.ImageFile;
+                originalProduct.ImageFileName = editedProduct.ImageFileName;
                 originalProduct.SupplierId = editedProduct.SupplierId;
                 originalProduct.Supplier = editedProduct.Supplier;
                                
@@ -218,33 +216,20 @@ namespace ProductStoreEditor.Controllers
         public ActionResult Delete(Product product)
         {
             #region
-            /*
-            if (product.PhotoFileName != null)
+            
+            if (product.ImageFileName != null)
             {
-                string imagesPath = configuration.GetValue<string>("ProductPhotosLocation");
-                string directoryPath = Path.Combine(imagesPath, product.ProductId.ToString());
+                string wwwRootPath = hostEnvironment.WebRootPath;
+                string imagesPath = wwwRootPath + "/Images/ProductPhotos/";
+                string filePath = Path.Combine(imagesPath, product.ImageFileName);
 
-                /*  string imagePath = Path.Combine(directoryPath, product.PhotoFileName);
 
-                  if (System.IO.File.Exists(imagePath))
+                  if (System.IO.File.Exists(filePath))
                   {
-                      System.IO.File.Delete(imagePath);
+                      System.IO.File.Delete(filePath);
                   }
-                  if (Directory.Exists(directoryPath))
-                  {
-                      Directory.Delete(directoryPath);
-                  }
-            }*/
-#endregion
-                if (product.ImageFile != null)
-            {
-                var imagePath = Path.Combine(hostEnvironment.WebRootPath, "Images", product.ImageFile);
-                if (System.IO.File.Exists(imagePath))
-                {
-                    System.IO.File.Delete(imagePath);
-                }
             }
-
+#endregion
             context.Products.Remove(product);
             context.SaveChanges();
 

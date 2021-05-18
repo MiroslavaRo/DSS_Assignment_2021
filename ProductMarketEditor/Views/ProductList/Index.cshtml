@@ -1,0 +1,62 @@
+﻿
+@model IEnumerable<ProductMarketEditor.Models.Product>
+
+@{
+    ViewData["Title"] = "Product List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Product List</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Product Name
+            </th>
+            <th>
+                Supplier
+            </th>
+            <th>
+                Product Photo
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Supplier.Company)
+                </td>
+
+                <td>
+                    @if (item.ImageFileName == null)
+                    {
+                        <img src="~/Images/NotFound.png" alt="image not found" width="50" height="50">
+                    }
+                    else
+                    {
+
+                        <img src="~/Images/ProductPhotos/@item.ImageFileName"  alt="@item.ImageFileName" width="50" height="50" />
+
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
