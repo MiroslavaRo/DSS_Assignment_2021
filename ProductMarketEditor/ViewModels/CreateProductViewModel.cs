@@ -24,15 +24,17 @@ namespace ProductMarketEditor.ViewModels
         [Display(Name = "Supplier")]
         [Required(ErrorMessage = "Please Select Company..")]
         public int SelectedSupplierId { get; set; }
-
-        
         
         
         [Display(Name ="Upload Photo")]
         [Required(ErrorMessage = "Please Upload Photo..")]
         public IFormFile ImageFile { get; set; }
-        
 
 
+        public string CreatedBy { get; set; }
+        public DateTime CreatedOn { get; set; }
+
+
+        public bool ErrorMessageVisible { get; set; }
     }
 }

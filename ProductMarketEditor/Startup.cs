@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -30,6 +31,11 @@ namespace ProductMarketEditor
             services.AddControllersWithViews();
             string conStr = this.Configuration.GetConnectionString("MyConn");
             services.AddDbContext<ProductMarketDBContext>(options => options.UseSqlServer(conStr));
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+            {
+                options.LoginPath = "/accounts/login";
+                options.AccessDeniedPath = "/accounts/login";
+            });
 
         }
 
