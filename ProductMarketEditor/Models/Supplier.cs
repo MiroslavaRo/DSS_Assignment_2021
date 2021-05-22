@@ -11,6 +11,7 @@ namespace ProductMarketEditor.Models
         public Supplier()
         {
             Products = new HashSet<Product>();
+            ProductChanges = new HashSet<ProductChange>();
         }
 
         public int SupplierId { get; set; }
@@ -21,5 +22,6 @@ namespace ProductMarketEditor.Models
 
         public virtual ProductType ProductType { get; set; }
         public virtual ICollection<Product> Products { get; set; }
+        public virtual ICollection<ProductChange> ProductChanges { get; set; }
     }
 }

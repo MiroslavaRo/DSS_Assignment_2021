@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProductMarketEditor.Data;
 
 namespace ProductMarketEditor.Migrations
 {
     [DbContext(typeof(ProductMarketDBContext))]
-    partial class ProductMarketDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210521162321_NewPhotos")]
+    partial class NewPhotos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -415,24 +417,20 @@ namespace ProductMarketEditor.Migrations
 
             modelBuilder.Entity("ProductMarketEditor.Models.ProductChange", b =>
                 {
-                    b.HasOne("ProductMarketEditor.Models.Product", "Product")
+                    b.HasOne("ProductMarketEditor.Models.Product", null)
                         .WithMany("ProductChanges")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("ProductMarketEditor.Models.ProductPhoto", b =>
                 {
-                    b.HasOne("ProductMarketEditor.Models.Product", "Product")
+                    b.HasOne("ProductMarketEditor.Models.Product", null)
                         .WithMany("ProductPhotos")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("ProductMarketEditor.Models.Supplier", b =>

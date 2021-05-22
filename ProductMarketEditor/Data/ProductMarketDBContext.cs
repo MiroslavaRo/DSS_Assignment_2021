@@ -16,11 +16,15 @@ namespace ProductMarketEditor.Data
         public DbSet<ProductType> ProductTypes { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }        
         public DbSet<User> Users { get; set; }
+        public DbSet<ProductPhoto> ProductPhotos { get; set; }
+        public DbSet<ProductChange> ProductChanges { get; set; }
+        
         /*
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Server =(local)\\sqlexpress; Database = ProductMarketDB; Trusted_Connection = True; MultipleActiveResultSets = True; ");
-        }*/
+        }
+        */
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             
@@ -82,12 +86,16 @@ namespace ProductMarketEditor.Data
 
 
 
-       
-           
             modelBuilder.Entity<Product>()
              .HasData(new Product { ProductId = 1, ProductName = "Prostokvashino Milk 3.2%", SupplierId = 2, ImageFileName = "1.jpg" });
             modelBuilder.Entity<Product>()
-             .HasData(new Product { ProductId = 2, ProductName = "Prostokvashino Cottage Cheese 5 %", SupplierId = 2, ImageFileName = "2.jpg" });
+             .HasData(new Product { ProductId = 2, ProductName = "Prostokvashino Cottage Cheese 5 %", SupplierId = 2, ImageFileName= "2.jpg" });
+        
+            
+            modelBuilder.Entity<ProductPhoto>()
+                .HasData(new ProductPhoto { ProductPhotoId = 1,ProductId=1, FileName= "1.jpg" });
+            modelBuilder.Entity<ProductPhoto>()
+                .HasData(new ProductPhoto { ProductPhotoId = 2, ProductId = 2,  FileName = "2.jpg" });
 
             
 
@@ -95,6 +103,14 @@ namespace ProductMarketEditor.Data
             .HasData(new Role { RoleId=1, RoleName="Admin"});
             modelBuilder.Entity<Role>()
              .HasData(new Role { RoleId = 2, RoleName = "User" });
+
+
+            
+            modelBuilder.Entity<ProductChange>()
+           .HasData(new ProductChange { ProductChangeId = 1, SupplierId = 2, ProductId = 1, CreatedBy = "LindaCole", EditedBy = "LindaCole", CreatedOn = "20/05/2021 23:30", EditedOn = "20/05/2021 23:30" });
+            modelBuilder.Entity<ProductChange>()
+             .HasData(new ProductChange { ProductChangeId = 2, SupplierId = 2, ProductId = 2, CreatedBy = "LindaCole", EditedBy = "LindaCole", CreatedOn = "20/05/2021 23:30", EditedOn = "20/05/2021 23:30" });
+            
             /*
             UserNames: Passwords 
             
@@ -102,7 +118,6 @@ namespace ProductMarketEditor.Data
             GrigorIus: HopeGg
             LindaCole:  pasSword   -admin
             John Blitz:  YokH
-             
              
              */
 
@@ -114,6 +129,8 @@ namespace ProductMarketEditor.Data
          .HasData(new User { UserId = 3, UserName = "LindaCole", Password = "pasSword", RoleId = 1 });
             modelBuilder.Entity<User>()
          .HasData(new User { UserId = 4, UserName = "John Blitz", Password = "YokH", RoleId = 2 });
+
+                   
 
 
         }

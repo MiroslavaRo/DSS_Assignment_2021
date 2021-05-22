@@ -11,7 +11,6 @@ namespace ProductMarketEditor.ViewModels
 {
     public class DisplayProductViewModel
     {
-        public Dictionary<Product, ProductChanges> Display { get; set; }
-
+        public List<Mapping> Display { get; set; }
     }
 }

@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ProductMarketEditor.Data;
 using ProductMarketEditor.Models;
+using ProductMarketEditor.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -31,11 +32,13 @@ namespace ProductMarketEditor
             services.AddControllersWithViews();
             string conStr = this.Configuration.GetConnectionString("MyConn");
             services.AddDbContext<ProductMarketDBContext>(options => options.UseSqlServer(conStr));
+           // services.AddSingleton(ChangeLog);
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
             {
                 options.LoginPath = "/accounts/login";
                 options.AccessDeniedPath = "/accounts/login";
             });
+          
 
         }
 

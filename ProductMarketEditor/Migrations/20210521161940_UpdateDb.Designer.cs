@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProductMarketEditor.Data;
 
 namespace ProductMarketEditor.Migrations
 {
     [DbContext(typeof(ProductMarketDBContext))]
-    partial class ProductMarketDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210521161940_UpdateDb")]
+    partial class UpdateDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,14 +47,12 @@ namespace ProductMarketEditor.Migrations
                         new
                         {
                             ProductId = 1,
-                            ImageFileName = "1.jpg",
                             ProductName = "Prostokvashino Milk 3.2%",
                             SupplierId = 2
                         },
                         new
                         {
                             ProductId = 2,
-                            ImageFileName = "2.jpg",
                             ProductName = "Prostokvashino Cottage Cheese 5 %",
                             SupplierId = 2
                         });
@@ -85,26 +85,6 @@ namespace ProductMarketEditor.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductChanges");
-
-                    b.HasData(
-                        new
-                        {
-                            ProductChangeId = 1,
-                            CreatedBy = "LindaCole",
-                            CreatedOn = "20/05/2021 23:30",
-                            EditedBy = "LindaCole",
-                            EditedOn = "20/05/2021 23:30",
-                            ProductId = 1
-                        },
-                        new
-                        {
-                            ProductChangeId = 2,
-                            CreatedBy = "LindaCole",
-                            CreatedOn = "20/05/2021 23:30",
-                            EditedBy = "LindaCole",
-                            EditedOn = "20/05/2021 23:30",
-                            ProductId = 2
-                        });
                 });
 
             modelBuilder.Entity("ProductMarketEditor.Models.ProductPhoto", b =>
@@ -125,20 +105,6 @@ namespace ProductMarketEditor.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductPhotos");
-
-                    b.HasData(
-                        new
-                        {
-                            ProductPhotoId = 1,
-                            FileName = "1.jpg",
-                            ProductId = 1
-                        },
-                        new
-                        {
-                            ProductPhotoId = 2,
-                            FileName = "2.jpg",
-                            ProductId = 2
-                        });
                 });
 
             modelBuilder.Entity("ProductMarketEditor.Models.ProductType", b =>
@@ -415,24 +381,20 @@ namespace ProductMarketEditor.Migrations
 
             modelBuilder.Entity("ProductMarketEditor.Models.ProductChange", b =>
                 {
-                    b.HasOne("ProductMarketEditor.Models.Product", "Product")
+                    b.HasOne("ProductMarketEditor.Models.Product", null)
                         .WithMany("ProductChanges")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("ProductMarketEditor.Models.ProductPhoto", b =>
                 {
-                    b.HasOne("ProductMarketEditor.Models.Product", "Product")
+                    b.HasOne("ProductMarketEditor.Models.Product", null)
                         .WithMany("ProductPhotos")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("ProductMarketEditor.Models.Supplier", b =>

@@ -18,7 +18,7 @@ namespace ProductMarketEditor.ViewModels
 
         /*
         public string EditedBy { get; set; }
-        public DateTime EditedOn { get; set; }
+        public string EditedOn { get; set; }
         */
     }
 }
