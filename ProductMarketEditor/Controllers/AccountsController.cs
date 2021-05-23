@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProductMarketEditor.Data;
 using ProductMarketEditor.Models;
+using ProductMarketEditor.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,45 @@ namespace ProductMarketEditor.Controllers
         public AccountsController(ProductMarketDBContext context)
         {
             this.context = context;
+        }
+       
+        public IActionResult Register()
+        {
+            RegisterViewModel registerViewModel = new RegisterViewModel();
+
+            return View(registerViewModel);
+        }
+
+
+        [HttpPost]
+        public IActionResult Register(RegisterViewModel model)
+        {
+            List<User> users = context.Users.ToList();
+           
+            foreach (var u in users)
+            {
+                if (u.UserName == model.Username)
+                {
+                    model.ErrorMessageVisible = true;
+                    return RedirectToAction("Register");
+                }
+                if (u.Password == model.Password)
+                {
+                    model.ErrorMessageVisible = true;
+                    return RedirectToAction("Register");
+                }
+            }
+
+            User user = new User();
+            user.Password = model.Password;
+            user.UserName = model.Username;
+            user.RoleId = 2;
+
+        
+            model.ErrorMessageVisible = false;
+            context.Users.Add(user);
+            context.SaveChanges();
+            return RedirectToAction("Index", "Home");
         }
 
         public IActionResult Login()

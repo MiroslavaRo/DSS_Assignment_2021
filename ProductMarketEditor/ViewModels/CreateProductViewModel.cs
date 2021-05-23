@@ -26,20 +26,14 @@ namespace ProductMarketEditor.ViewModels
         [Display(Name = "Supplier")]
         [Required(ErrorMessage = "Please Select Company..")]
         public int SelectedSupplierId { get; set; }
-        
-        /*
-        [NotMapped]
-        [Display(Name ="Upload Photo")]
-        [Required(ErrorMessage = "Please Upload Photo..")]
-        public IFormFile ImageFile { get; set; }
-        */
-        /*
-         public string CreatedBy { get; set; }
-         public string CreatedOn { get; set; }
-        public string EditedBy { get; set; }
-        public string EditedOn { get; set; }
-        */
 
         public bool ErrorMessageVisible { get; set; }
+
+
+        public string CreatedBy { get; set; }
+        public string EditedBy { get; set; }
+        public string CreatedOn { get; set; }
+        public string EditedOn { get; set; }
+        public int ProductChangeId { get; set; }
     }
 }

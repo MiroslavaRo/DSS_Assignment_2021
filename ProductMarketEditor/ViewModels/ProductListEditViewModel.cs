@@ -16,9 +16,5 @@ namespace ProductMarketEditor.ViewModels
         public bool SuccessMessageVisible { get; set; }
         public bool ErrorMessageVisible { get; set; }
 
-        /*
-        public string EditedBy { get; set; }
-        public string EditedOn { get; set; }
-        */
     }
 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProductMarketEditor.Data;
 
 namespace ProductMarketEditor.Migrations
 {
     [DbContext(typeof(ProductMarketDBContext))]
-    partial class ProductMarketDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210522154728_ProductChanges")]
+    partial class ProductChanges
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -93,17 +95,17 @@ namespace ProductMarketEditor.Migrations
                         {
                             ProductChangeId = 1,
                             CreatedBy = "LindaCole",
-                            CreatedOn = "2021/05/20 11:30:30 AM",
+                            CreatedOn = "20/05/2021 23:30",
                             EditedBy = "LindaCole",
-                            EditedOn = "2021/05/20 11:30:30 AM"
+                            EditedOn = "20/05/2021 23:30"
                         },
                         new
                         {
                             ProductChangeId = 2,
                             CreatedBy = "LindaCole",
-                            CreatedOn = "2021/05/20 11:30:30 AM",
+                            CreatedOn = "20/05/2021 23:30",
                             EditedBy = "LindaCole",
-                            EditedOn = "2021/05/20 11:30:30 AM"
+                            EditedOn = "20/05/2021 23:30"
                         });
                 });
 

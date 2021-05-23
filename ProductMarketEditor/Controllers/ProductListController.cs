@@ -34,23 +34,9 @@ namespace ProductStoreEditor.Controllers
         public ActionResult Index()
         {
             
-            List<Product> products = context.Products.Include(a=>a.ProductChanges.FirstOrDefault(b=>b.ProductId==a.ProductId))
+            List<Product> products = context.Products.Include(a=>a.ProductChange)
                   .Include(c => c.Supplier).ToList();
-
-            List<ProductChange> changeLog = context.ProductChanges.Include(a => a.Product).ToList();
-           
-            /*
-            DisplayProductViewModel display = new DisplayProductViewModel():
-            Mapping mapping = new Mapping();
-
-            for(var i = 0; i < products.Count; i++)
-            {
-                mapping.product = context.Products.Include(a => a.Supplier.Company).FirstOrDefault(a=>a.ProductId==i);
-                mapping.changeLog = context.Products.FirstOrDefault(a => a.ProductId == i);
-                display.Display.Add(mapping);
-            }
-            */
-            return View(display);
+            return View(products);
         }
 
     
@@ -59,7 +45,7 @@ namespace ProductStoreEditor.Controllers
         public ActionResult Details(int id)
         {
             Product product = context.Products
-                 .Include(a => a.Supplier)
+                 .Include(a => a.Supplier).Include(a=>a.ProductChange)
                 .FirstOrDefault(a => a.ProductId == id);
            
             return View(product);
@@ -67,12 +53,12 @@ namespace ProductStoreEditor.Controllers
 
         }
 
-
+        [Authorize]
         public IActionResult Create()
         {
             CreateProductViewModel createProductViewModel = new CreateProductViewModel();
             createProductViewModel.Suppliers = GetSuppliers();
-
+          
             return View(createProductViewModel);
         }
 
@@ -80,27 +66,30 @@ namespace ProductStoreEditor.Controllers
         [HttpPost]
         public IActionResult Create(CreateProductViewModel model, IFormFile photo)
         {
+            ProductChange changeLog = new ProductChange();
+            changeLog.CreatedBy = this.HttpContext.User.Identity.Name;
+            changeLog.CreatedOn = DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss tt");
+            changeLog.EditedBy = changeLog.CreatedBy;
+            changeLog.EditedOn = changeLog.CreatedOn;
+            context.ProductChanges.Add(changeLog);
+            context.SaveChanges();
+            model.ProductChangeId = context.ProductChanges.First(a => a.CreatedOn == changeLog.CreatedOn).ProductChangeId;
+
+
+
             Product product = new Product();
             product.ProductName = model.ProductName;
-
+            product.ProductChangeId = model.ProductChangeId;
             model.Suppliers = GetSuppliers();
             product.SupplierId = model.SelectedSupplierId;
-
-         
-
-            ProductChange changeLog = new ProductChange();
-            changeLog.CreatedBy = changeLog.EditedBy = this.HttpContext.User.Identity.Name;
-            changeLog.CreatedOn = changeLog.EditedOn = DateTime.Now.ToString("yyyy/MM/dd hh:mm");
-
 
 
             if (photo != null)
             {
-
                 model.ErrorMessageVisible = false;
                 string wwwRootPath = hostEnvironment.WebRootPath;
-                string imagesPath = Path.Combine(wwwRootPath, "wwwroot", "Images","ProductPhotos");
-                //wwwRootPath + "/Images/ProductPhotos/";
+                 string imagesPath = Path.Combine(wwwRootPath, "wwwroot", "Images", "ProductPhotos");
+               // string imagesPath = configuration.GetValue<string>("ProductPhotosLocation");
 
                 string directoryPath = Path.Combine(imagesPath, product.ProductId.ToString());
                 if (!Directory.Exists(directoryPath))
@@ -111,6 +100,9 @@ namespace ProductStoreEditor.Controllers
                 string fileName = string.Format("{0}.jpg", Path.GetFileNameWithoutExtension(Path.GetRandomFileName()));
                 string filePath = Path.Combine(directoryPath, fileName);
 
+
+
+
                 try
                 {
                     using (Stream fileStream = new FileStream(filePath, FileMode.Create))
@@ -120,17 +112,16 @@ namespace ProductStoreEditor.Controllers
 
                     ProductPhoto image = new ProductPhoto();
                     image.ProductId = product.ProductId;
-                    product.ImageFileName=  image.FileName = fileName;
+                    image.FileName = fileName;
+                    product.ImageFileName = image.FileName;
 
                     context.ProductPhotos.Add(image);
-                    context.ProductChanges.Add(changeLog);
                     context.Products.Add(product);
                     context.SaveChanges();
                     return RedirectToAction("Index");
                 }
                 catch
                 {
-                    //rollback
                     return RedirectToAction("Error", "Home");
                 }
              
@@ -138,59 +129,22 @@ namespace ProductStoreEditor.Controllers
             else
             {
                 model.ErrorMessageVisible = true;
-                return View(model);
+                // return View(model);
+                context.Products.Add(product);
+                context.SaveChanges();
+                return RedirectToAction("Index");
             }
-            
-
-            #region
-            /*   if (model.ImageFile!=null)
-               {
-
-                   model.ErrorMessageVisible = false;
-                   string wwwRootPath = hostEnvironment.WebRootPath;
-                   string fileName = Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
-                   string extension = Path.GetExtension(model.ImageFile.FileName);
-
-                   string imagesPath = wwwRootPath + "/Images/ProductPhotos/";
-
-
-                   string directoryPath = Path.Combine(imagesPath, product.ProductId.ToString());
-                   if (!Directory.Exists(directoryPath))
-                   {
-                       Directory.CreateDirectory(directoryPath);
-                   }
-
-                   fileName = fileName + extension;
-                   model.ImageFileName=product.ImageFileName = fileName + extension;
-
-                   string filePath = Path.Combine(imagesPath, fileName);
-                   using (Stream fileStream = new FileStream(filePath, FileMode.Create))
-                   {
-                       model.ImageFile.CopyTo(fileStream);
-                   }
-
-                   context.Products.Add(product);
-                   context.SaveChanges();
-                   return RedirectToAction("Index");
-               }
-               else
-               {
-                   model.ErrorMessageVisible = true;
-                   return View(model);
-               }
-           */
-            #endregion
-
+           
         }
 
 
-
+        [Authorize]
 
         // [Authorize(Roles = "Admin")]
         public IActionResult Edit(int id)
         {
             CultureInfo cultureInfo = CultureInfo.CurrentCulture;
-            Product product = context.Products.Include(a => a.Supplier)
+            Product product = context.Products.Include(a => a.Supplier).Include(a=>a.ProductChange)
                 .First(a => a.ProductId == id);
            
             ProductListEditViewModel viewModel = new ProductListEditViewModel();
@@ -219,12 +173,11 @@ namespace ProductStoreEditor.Controllers
                 originalProduct.ProductName = editedProduct.ProductName;
                 originalProduct.ImageFileName = editedProduct.ImageFileName;
                 originalProduct.SupplierId = editedProduct.SupplierId;
-                originalProduct.Supplier = editedProduct.Supplier;
+              //  originalProduct.ProductChangeId = editedProduct.ProductChangeId;
 
-
-                ProductChange editing = context.ProductChanges.FirstOrDefault(a=>a.ProductId ==editedProduct.ProductId);
+                ProductChange editing = context.ProductChanges.FirstOrDefault(a=>a.ProductChangeId == originalProduct.ProductChangeId);
                 editing.EditedBy = this.HttpContext.User.Identity.Name;
-                editing.EditedOn = DateTime.Now.ToString("yyyy/MM/dd hh:mm");
+                editing.EditedOn = DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss tt");
 
 
 
@@ -233,12 +186,12 @@ namespace ProductStoreEditor.Controllers
             }
             return View(viewModel);
         }
-
+        [Authorize]
 
         public ActionResult Delete(int id)
         {
             Product product = context.Products
-                .Include(a => a.Supplier)
+                .Include(a => a.Supplier).Include(a=>a.ProductChange)
                .FirstOrDefault(a => a.ProductId == id);
 
             return View(product);
@@ -266,13 +219,11 @@ namespace ProductStoreEditor.Controllers
                       System.IO.File.Delete(filePath);
                   }
             }
-            var deleting = context.ProductChanges.First(a=>a.ProductId==product.ProductId);
-            context.ProductChanges.Remove(deleting);
 
             context.Products.Remove(product);
             context.SaveChanges();
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index");
 
         }
 
@@ -293,5 +244,5 @@ namespace ProductStoreEditor.Controllers
         }
     }
 }
-*/
+
 

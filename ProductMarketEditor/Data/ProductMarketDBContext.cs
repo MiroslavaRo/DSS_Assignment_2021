@@ -87,9 +87,9 @@ namespace ProductMarketEditor.Data
 
 
             modelBuilder.Entity<Product>()
-             .HasData(new Product { ProductId = 1, ProductName = "Prostokvashino Milk 3.2%", SupplierId = 2, ImageFileName = "1.jpg" });
+             .HasData(new Product { ProductId = 1, ProductChangeId = 1, ProductName = "Prostokvashino Milk 3.2%", SupplierId = 2, ImageFileName = "1.jpg" });
             modelBuilder.Entity<Product>()
-             .HasData(new Product { ProductId = 2, ProductName = "Prostokvashino Cottage Cheese 5 %", SupplierId = 2, ImageFileName= "2.jpg" });
+             .HasData(new Product { ProductId = 2, ProductChangeId = 2, ProductName = "Prostokvashino Cottage Cheese 5 %", SupplierId = 2, ImageFileName= "2.jpg" });
         
             
             modelBuilder.Entity<ProductPhoto>()
@@ -107,9 +107,9 @@ namespace ProductMarketEditor.Data
 
             
             modelBuilder.Entity<ProductChange>()
-           .HasData(new ProductChange { ProductChangeId = 1, SupplierId = 2, ProductId = 1, CreatedBy = "LindaCole", EditedBy = "LindaCole", CreatedOn = "20/05/2021 23:30", EditedOn = "20/05/2021 23:30" });
+           .HasData(new ProductChange { ProductChangeId = 1,  CreatedBy = "LindaCole", EditedBy = "LindaCole", CreatedOn = "2021/05/20 11:30:30 AM", EditedOn = "2021/05/20 11:30:30 AM" });
             modelBuilder.Entity<ProductChange>()
-             .HasData(new ProductChange { ProductChangeId = 2, SupplierId = 2, ProductId = 2, CreatedBy = "LindaCole", EditedBy = "LindaCole", CreatedOn = "20/05/2021 23:30", EditedOn = "20/05/2021 23:30" });
+             .HasData(new ProductChange { ProductChangeId = 2,  CreatedBy = "LindaCole", EditedBy = "LindaCole", CreatedOn = "2021/05/20 11:30:30 AM", EditedOn = "2021/05/20 11:30:30 AM" });
             
             /*
             UserNames: Passwords 

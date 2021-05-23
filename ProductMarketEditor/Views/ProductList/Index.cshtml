@@ -25,18 +25,17 @@
             <th>
                 Product Photo
             </th>
-
-            <th>
-                EditedBy
-            </th>
-            <th>
-                EditedOn
-            </th>
             <th>
                 CreatedBy
             </th>
             <th>
                 CreatedOn
+            </th>
+            <th>
+                EditedBy
+            </th>
+            <th>
+                EditedOn
             </th>
 
             <th></th>
@@ -45,33 +44,43 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ProductName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Supplier.Company)
-                </td>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Supplier.Company)
+            </td>
 
-                <td>
-                    @if (item.ImageFileName == null)
-                    {
-                        <img src="~/Images/NotFound.png" alt="image not found" width="50" height="50">
-                    }
-                    else
-                    {
-                        <img src="~/Images/ProductPhotos/@item.ProductId.ToString()/@item.ImageFileName" alt="@item.ImageFileName" width="50" height="50" />
+            <td>
+                @if (item.ImageFileName == null)
+                {
+                    <img src="~/Images/NotFound.png" alt="image not found" width="50" height="50">
+                }
+                else
+                {
+                    <img src="~/Images/ProductPhotos/@item.ProductId.ToString()/@item.ImageFileName" alt="@item.ImageFileName" width="50" height="50" />
 
-                    }
-                </td>
-
-
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
-                </td>
-            </tr>
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductChange.CreatedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductChange.CreatedOn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductChange.EditedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductChange.EditedOn)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
+            </td>
+        </tr>
         }
     </tbody>
 </table>

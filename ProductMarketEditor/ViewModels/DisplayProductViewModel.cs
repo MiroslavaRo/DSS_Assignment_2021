@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using ProductMarketEditor.Data;
 using ProductMarketEditor.Models;
-using ProductMarketEditor.ViewModels.ChageLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;

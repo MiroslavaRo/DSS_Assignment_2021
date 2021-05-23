@@ -25,9 +25,6 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Supplier.Company)
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ImageFileName)
-        </dt>
         <dd class="col-sm-10">
             @if (Model.ImageFileName == null)
             {
@@ -35,7 +32,7 @@
             }
             else
             {
-                <img src="~/Images/ProductPhotos/@Model.ImageFileName" alt="@Model.ImageFileName" width="250" height="250" />
+                <img src="~/Images/ProductPhotos/@Model.ProductId.ToString()/@Model.ImageFileName" alt="@Model.ImageFileName" width="250" height="250" />
             }
         </dd>
     </dl>

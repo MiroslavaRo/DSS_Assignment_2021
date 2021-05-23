@@ -155,3 +155,4 @@ D:\VUM STUDY\1 year 2 semester\DDS\Assignment\DSS_Assignment_2021\ProductMarketE
 D:\VUM STUDY\1 year 2 semester\DDS\Assignment\DSS_Assignment_2021\ProductMarketEditor\bin\Debug\netcoreapp3.1\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 D:\VUM STUDY\1 year 2 semester\DDS\Assignment\DSS_Assignment_2021\ProductMarketEditor\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
 D:\VUM STUDY\1 year 2 semester\DDS\Assignment\DSS_Assignment_2021\ProductMarketEditor\obj\Debug\netcoreapp3.1\Razor\Views\ProductList\Edit.cshtml.g.cs
+D:\VUM STUDY\1 year 2 semester\DDS\Assignment\DSS_Assignment_2021\ProductMarketEditor\obj\Debug\netcoreapp3.1\Razor\Views\Accounts\Register.cshtml.g.cs
