@@ -62,7 +62,7 @@ namespace ProductMarketEditor.Controllers
             context.SupplierChanges.Add(changelog);
             context.SaveChanges();
             model.SupplierChangeId = context.SupplierChanges.First(a => a.CreatedOn == changelog.CreatedOn).ProductChangeId;
-
+             
 
 
             Supplier supplier = new Supplier();
