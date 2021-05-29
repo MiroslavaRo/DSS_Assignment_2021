@@ -105,9 +105,11 @@ namespace ProductMarketEditor.Controllers
                 Supplier originalSupplier = context.Suppliers.FirstOrDefault(a => a.SupplierId == editedSupplier.SupplierId);
                 originalSupplier.Company = editedSupplier.Company;
                 originalSupplier.ProductTypeId = editedSupplier.ProductTypeId;
-                SupplierChange editing = context.SupplierChanges.FirstOrDefault(a => a.SupplierChangeId == originalSupplier.SupplierChangeId);
+
+
+                SupplierChange editing = context.SupplierChanges.FirstOrDefault(b=>b.SupplierChangeId == originalSupplier.SupplierChangeId);
                 editing.EditedBy = this.HttpContext.User.Identity.Name;
-                editing.EditedOn = DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss tt");
+                editing.EditedOn = DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss tt"); 
 
                 viewModel.SuccessMessageVisible = true;
                 context.SaveChanges();
