@@ -16,9 +16,9 @@ namespace ProductMarketEditor.Data
         public DbSet<ProductType> ProductTypes { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }        
         public DbSet<User> Users { get; set; }
-        public DbSet<ProductPhoto> ProductPhotos { get; set; }
         public DbSet<ProductChange> ProductChanges { get; set; }
-        
+        public DbSet<ProductChange> SupplierChanges { get; set; }
+
         /*
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -56,34 +56,36 @@ namespace ProductMarketEditor.Data
 
             
             modelBuilder.Entity<Supplier>()
-                .HasData(new Supplier { SupplierId = 1, Company = "Burum", ProductTypeId = 11});
+                .HasData(new Supplier { SupplierId = 1, Company = "Burum", ProductTypeId = 11, SupplierChangeId=1});
             modelBuilder.Entity<Supplier>()
-               .HasData(new Supplier { SupplierId = 2, Company = "Prostokvashino", ProductTypeId = 3 });
+               .HasData(new Supplier { SupplierId = 2, Company = "Prostokvashino", ProductTypeId = 3, SupplierChangeId = 1 });
             modelBuilder.Entity<Supplier>()
-              .HasData(new Supplier { SupplierId = 3, Company = "H&S Bakery", ProductTypeId = 4 });
+              .HasData(new Supplier { SupplierId = 3, Company = "H&S Bakery", ProductTypeId = 4, SupplierChangeId = 1 });
             modelBuilder.Entity<Supplier>()
-             .HasData(new Supplier { SupplierId = 4, Company = "Aryzita", ProductTypeId = 4 });
+             .HasData(new Supplier { SupplierId = 4, Company = "Aryzita", ProductTypeId = 4, SupplierChangeId = 1 });
             modelBuilder.Entity<Supplier>()
-             .HasData(new Supplier { SupplierId = 5, Company = "Bacardi", ProductTypeId = 6 });
+             .HasData(new Supplier { SupplierId = 5, Company = "Bacardi", ProductTypeId = 6, SupplierChangeId = 1 });
             modelBuilder.Entity<Supplier>()
-             .HasData(new Supplier { SupplierId = 6, Company = "Corona", ProductTypeId = 6 });
+             .HasData(new Supplier { SupplierId = 6, Company = "Corona", ProductTypeId = 6, SupplierChangeId = 1 });
             modelBuilder.Entity<Supplier>()
-             .HasData(new Supplier { SupplierId = 7, Company = "Nescafe", ProductTypeId = 5 });
+             .HasData(new Supplier { SupplierId = 7, Company = "Nescafe", ProductTypeId = 5, SupplierChangeId = 1 });
             modelBuilder.Entity<Supplier>()
-             .HasData(new Supplier { SupplierId = 8, Company = "Nesquik", ProductTypeId = 5 });
+             .HasData(new Supplier { SupplierId = 8, Company = "Nesquik", ProductTypeId = 5, SupplierChangeId = 1 });
             modelBuilder.Entity<Supplier>()
-             .HasData(new Supplier { SupplierId = 9, Company = "Maruha Nichiro", ProductTypeId = 11 });
+             .HasData(new Supplier { SupplierId = 9, Company = "Maruha Nichiro", ProductTypeId = 11, SupplierChangeId = 1 });
             modelBuilder.Entity<Supplier>()
-             .HasData(new Supplier { SupplierId = 10, Company = "Dairy Pure", ProductTypeId = 3 });
+             .HasData(new Supplier { SupplierId = 10, Company = "Dairy Pure", ProductTypeId = 3, SupplierChangeId = 1 });
             modelBuilder.Entity<Supplier>()
-             .HasData(new Supplier { SupplierId = 11, Company = "Mowi", ProductTypeId = 11 });
+             .HasData(new Supplier { SupplierId = 11, Company = "Mowi", ProductTypeId = 11, SupplierChangeId = 1 });
             modelBuilder.Entity<Supplier>()
-             .HasData(new Supplier { SupplierId = 12, Company = "Prima", ProductTypeId = 1 });
+             .HasData(new Supplier { SupplierId = 12, Company = "Prima", ProductTypeId = 1, SupplierChangeId = 1 });
             modelBuilder.Entity<Supplier>()
-             .HasData(new Supplier { SupplierId = 13, Company = "Prima", ProductTypeId = 2 });
+             .HasData(new Supplier { SupplierId = 13, Company = "Prima", ProductTypeId = 2, SupplierChangeId = 1 });
             modelBuilder.Entity<Supplier>()
-             .HasData(new Supplier { SupplierId = 14, Company = "Tyson Product", ProductTypeId = 10 });
+             .HasData(new Supplier { SupplierId = 14, Company = "Tyson Product", ProductTypeId = 10, SupplierChangeId = 1 });
 
+            modelBuilder.Entity<SupplierChange>()
+                .HasData(new SupplierChange { SupplierChangeId = 1, CreatedBy = "LindaCole", EditedBy = "LindaCole", CreatedOn = "2021/05/20 11:30:30 AM", EditedOn = "2021/05/20 11:30:30 AM" });
 
 
             modelBuilder.Entity<Product>()
@@ -91,12 +93,7 @@ namespace ProductMarketEditor.Data
             modelBuilder.Entity<Product>()
              .HasData(new Product { ProductId = 2, ProductChangeId = 2, ProductName = "Prostokvashino Cottage Cheese 5 %", SupplierId = 2, ImageFileName= "2.jpg" });
         
-            
-            modelBuilder.Entity<ProductPhoto>()
-                .HasData(new ProductPhoto { ProductPhotoId = 1,ProductId=1, FileName= "1.jpg" });
-            modelBuilder.Entity<ProductPhoto>()
-                .HasData(new ProductPhoto { ProductPhotoId = 2, ProductId = 2,  FileName = "2.jpg" });
-
+          
             
 
             modelBuilder.Entity<Role>()

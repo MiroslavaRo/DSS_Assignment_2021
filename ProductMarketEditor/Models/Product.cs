@@ -17,6 +17,5 @@ namespace ProductMarketEditor.Models
 
         public virtual Supplier Supplier { get; set; }
         public virtual ProductChange ProductChange { get; set; }
-        public virtual ICollection<ProductPhoto> ProductPhotos { get; set; }
     }
 }

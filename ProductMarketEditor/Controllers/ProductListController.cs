@@ -82,14 +82,15 @@ namespace ProductStoreEditor.Controllers
             product.ProductChangeId = model.ProductChangeId;
             model.Suppliers = GetSuppliers();
             product.SupplierId = model.SelectedSupplierId;
+            context.Products.Add(product);
+            context.SaveChanges();
 
 
             if (photo != null)
             {
                 model.ErrorMessageVisible = false;
                 string wwwRootPath = hostEnvironment.WebRootPath;
-                 string imagesPath = Path.Combine(wwwRootPath, "wwwroot", "Images", "ProductPhotos");
-               // string imagesPath = configuration.GetValue<string>("ProductPhotosLocation");
+                string imagesPath = configuration.GetValue<string>("ProductPhotosLocation");
 
                 string directoryPath = Path.Combine(imagesPath, product.ProductId.ToString());
                 if (!Directory.Exists(directoryPath))
@@ -98,39 +99,20 @@ namespace ProductStoreEditor.Controllers
                 }
 
                 string fileName = string.Format("{0}.jpg", Path.GetFileNameWithoutExtension(Path.GetRandomFileName()));
+                context.Products.FirstOrDefault(a => a == product).ImageFileName = fileName;
                 string filePath = Path.Combine(directoryPath, fileName);
-
-
-
-
-                try
+                using (Stream fileStream = new FileStream(filePath, FileMode.Create))
                 {
-                    using (Stream fileStream = new FileStream(filePath, FileMode.Create))
-                    {
-                        photo.CopyTo(fileStream);
-                    }
-
-                    ProductPhoto image = new ProductPhoto();
-                    image.ProductId = product.ProductId;
-                    image.FileName = fileName;
-                    product.ImageFileName = image.FileName;
-
-                    context.ProductPhotos.Add(image);
-                    context.Products.Add(product);
-                    context.SaveChanges();
-                    return RedirectToAction("Index");
+                    photo.CopyTo(fileStream);
                 }
-                catch
-                {
-                    return RedirectToAction("Error", "Home");
-                }
-             
+               
+
+                context.SaveChanges();
+                return RedirectToAction("Index");
+               
             }
             else
             {
-                model.ErrorMessageVisible = true;
-                // return View(model);
-                context.Products.Add(product);
                 context.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -139,8 +121,6 @@ namespace ProductStoreEditor.Controllers
 
 
         [Authorize]
-
-        // [Authorize(Roles = "Admin")]
         public IActionResult Edit(int id)
         {
             CultureInfo cultureInfo = CultureInfo.CurrentCulture;
@@ -173,7 +153,6 @@ namespace ProductStoreEditor.Controllers
                 originalProduct.ProductName = editedProduct.ProductName;
                 originalProduct.ImageFileName = editedProduct.ImageFileName;
                 originalProduct.SupplierId = editedProduct.SupplierId;
-              //  originalProduct.ProductChangeId = editedProduct.ProductChangeId;
 
                 ProductChange editing = context.ProductChanges.FirstOrDefault(a=>a.ProductChangeId == originalProduct.ProductChangeId);
                 editing.EditedBy = this.HttpContext.User.Identity.Name;
@@ -203,23 +182,19 @@ namespace ProductStoreEditor.Controllers
         [HttpPost]
         public ActionResult Delete(Product product)
         {
-
-            if (product.ImageFileName != null)
-            {
-                var photo = context.ProductPhotos.First(a=>a.ProductId==product.ProductId);
-                context.ProductPhotos.Remove(photo);
-
-                string wwwRootPath = hostEnvironment.WebRootPath;
-                string imagesPath = Path.Combine(wwwRootPath, "wwwroot", "Images", "ProductPhotos", product.ProductId.ToString());
-                string filePath = Path.Combine(imagesPath, product.ImageFileName);
-
-
-                  if (System.IO.File.Exists(filePath))
-                  {
-                      System.IO.File.Delete(filePath);
-                  }
-            }
-
+            string imagesPath = configuration.GetValue<string>("ProductPhotosLocation");
+          
+            string directoryPath = Path.Combine(imagesPath, product.ProductId.ToString());
+                if (Directory.Exists(directoryPath))
+                {
+                var files = Directory.GetFiles(directoryPath);
+                foreach(var file in files)
+                {
+                    System.IO.File.Delete(file);
+                }
+                    Directory.Delete(directoryPath);
+                }
+           
             context.Products.Remove(product);
             context.SaveChanges();
 

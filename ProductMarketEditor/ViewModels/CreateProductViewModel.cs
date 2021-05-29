@@ -15,11 +15,11 @@ namespace ProductMarketEditor.ViewModels
         {
             Suppliers = new List<SelectListItem>();
         }
-       // public string ImageFileName { get; set; }
 
         [Display(Name = "Product Name")]
         [Required(ErrorMessage = "Please Enter Product Name..")]
         public string ProductName { get; set; }
+
 
         public IEnumerable<SelectListItem> Suppliers { get; set; }
 

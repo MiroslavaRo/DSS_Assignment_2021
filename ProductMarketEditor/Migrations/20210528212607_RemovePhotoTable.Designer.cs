@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProductMarketEditor.Data;
 
 namespace ProductMarketEditor.Migrations
 {
     [DbContext(typeof(ProductMarketDBContext))]
-    partial class ProductMarketDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210528212607_RemovePhotoTable")]
+    partial class RemovePhotoTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -86,7 +88,7 @@ namespace ProductMarketEditor.Migrations
 
                     b.HasKey("ProductChangeId");
 
-                    b.ToTable("ProductChange");
+                    b.ToTable("ProductChanges");
 
                     b.HasData(
                         new
@@ -224,14 +226,9 @@ namespace ProductMarketEditor.Migrations
                     b.Property<int?>("ProductTypeId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SupplierChangeId")
-                        .HasColumnType("int");
-
                     b.HasKey("SupplierId");
 
                     b.HasIndex("ProductTypeId");
-
-                    b.HasIndex("SupplierChangeId");
 
                     b.ToTable("Suppliers");
 
@@ -240,133 +237,85 @@ namespace ProductMarketEditor.Migrations
                         {
                             SupplierId = 1,
                             Company = "Burum",
-                            ProductTypeId = 11,
-                            SupplierChangeId = 1
+                            ProductTypeId = 11
                         },
                         new
                         {
                             SupplierId = 2,
                             Company = "Prostokvashino",
-                            ProductTypeId = 3,
-                            SupplierChangeId = 1
+                            ProductTypeId = 3
                         },
                         new
                         {
                             SupplierId = 3,
                             Company = "H&S Bakery",
-                            ProductTypeId = 4,
-                            SupplierChangeId = 1
+                            ProductTypeId = 4
                         },
                         new
                         {
                             SupplierId = 4,
                             Company = "Aryzita",
-                            ProductTypeId = 4,
-                            SupplierChangeId = 1
+                            ProductTypeId = 4
                         },
                         new
                         {
                             SupplierId = 5,
                             Company = "Bacardi",
-                            ProductTypeId = 6,
-                            SupplierChangeId = 1
+                            ProductTypeId = 6
                         },
                         new
                         {
                             SupplierId = 6,
                             Company = "Corona",
-                            ProductTypeId = 6,
-                            SupplierChangeId = 1
+                            ProductTypeId = 6
                         },
                         new
                         {
                             SupplierId = 7,
                             Company = "Nescafe",
-                            ProductTypeId = 5,
-                            SupplierChangeId = 1
+                            ProductTypeId = 5
                         },
                         new
                         {
                             SupplierId = 8,
                             Company = "Nesquik",
-                            ProductTypeId = 5,
-                            SupplierChangeId = 1
+                            ProductTypeId = 5
                         },
                         new
                         {
                             SupplierId = 9,
                             Company = "Maruha Nichiro",
-                            ProductTypeId = 11,
-                            SupplierChangeId = 1
+                            ProductTypeId = 11
                         },
                         new
                         {
                             SupplierId = 10,
                             Company = "Dairy Pure",
-                            ProductTypeId = 3,
-                            SupplierChangeId = 1
+                            ProductTypeId = 3
                         },
                         new
                         {
                             SupplierId = 11,
                             Company = "Mowi",
-                            ProductTypeId = 11,
-                            SupplierChangeId = 1
+                            ProductTypeId = 11
                         },
                         new
                         {
                             SupplierId = 12,
                             Company = "Prima",
-                            ProductTypeId = 1,
-                            SupplierChangeId = 1
+                            ProductTypeId = 1
                         },
                         new
                         {
                             SupplierId = 13,
                             Company = "Prima",
-                            ProductTypeId = 2,
-                            SupplierChangeId = 1
+                            ProductTypeId = 2
                         },
                         new
                         {
                             SupplierId = 14,
                             Company = "Tyson Product",
-                            ProductTypeId = 10,
-                            SupplierChangeId = 1
-                        });
-                });
-
-            modelBuilder.Entity("ProductMarketEditor.Models.SupplierChange", b =>
-                {
-                    b.Property<int>("SupplierChangeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CreatedOn")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EditedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EditedOn")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("SupplierChangeId");
-
-                    b.ToTable("SupplierChange");
-
-                    b.HasData(
-                        new
-                        {
-                            SupplierChangeId = 1,
-                            CreatedBy = "LindaCole",
-                            CreatedOn = "2021/05/20 11:30:30 AM",
-                            EditedBy = "LindaCole",
-                            EditedOn = "2021/05/20 11:30:30 AM"
+                            ProductTypeId = 10
                         });
                 });
 
@@ -444,13 +393,7 @@ namespace ProductMarketEditor.Migrations
                         .WithMany("Suppliers")
                         .HasForeignKey("ProductTypeId");
 
-                    b.HasOne("ProductMarketEditor.Models.SupplierChange", "SupplierChange")
-                        .WithMany("Suppliers")
-                        .HasForeignKey("SupplierChangeId");
-
                     b.Navigation("ProductType");
-
-                    b.Navigation("SupplierChange");
                 });
 
             modelBuilder.Entity("ProductMarketEditor.Models.User", b =>
@@ -480,11 +423,6 @@ namespace ProductMarketEditor.Migrations
             modelBuilder.Entity("ProductMarketEditor.Models.Supplier", b =>
                 {
                     b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("ProductMarketEditor.Models.SupplierChange", b =>
-                {
-                    b.Navigation("Suppliers");
                 });
 #pragma warning restore 612, 618
         }

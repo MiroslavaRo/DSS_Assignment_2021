@@ -12,7 +12,7 @@ namespace ProductMarketEditor.ViewModels
         public string Username { get; set; }
 
         [Required (ErrorMessage = "Please Enter Password..."), DataType(DataType.Password)]
-       // [(ErrorMessage = "Please Enter Password...")]
+     
         public string Password { get; set; }
 
         [DataType(DataType.Password), Compare(nameof(Password))]

@@ -1,0 +1,53 @@
+﻿@model SupplierEditViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>Product</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        @if (Model.SuccessMessageVisible)
+        {
+            <div class="alert alert-primary" role="alert">
+                Supplier saved!
+            </div>
+        }
+        @if (Model.ErrorMessageVisible)
+        {
+            <div class="alert alert-danger" role="alert">
+                Supplier not valid
+            </div>
+        }
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="SupplierToBeEdited.SupplierId" />
+            <div class="form-group">
+                <label class="control-label">Product Name</label>
+                <input asp-for="SupplierToBeEdited.Company" class="form-control" />
+                <span asp-validation-for="SupplierToBeEdited.Company" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Supplier</label>
+                <select asp-for="SupplierToBeEdited.ProductType" class="form-control" asp-items="Model.ProductTypes"></select>
+                <input type="hidden" asp-for="SupplierToBeEdited.ProductType" class="form-control" />
+                <span asp-validation-for="SupplierToBeEdited.ProductTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
