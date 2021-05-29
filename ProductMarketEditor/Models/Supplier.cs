@@ -17,6 +17,7 @@ namespace ProductMarketEditor.Models
         public string Company { get; set; }
         public int? ProductTypeId { get; set; }
         public int? SupplierChangeId { get; set; }
+        public string ImageFile { get; set; }
 
         public virtual ProductType ProductType { get; set; }
         public virtual ICollection<Product> Products { get; set; }

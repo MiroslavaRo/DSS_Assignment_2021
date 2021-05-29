@@ -41,7 +41,18 @@
                 @Html.DisplayFor(modelItem => item.Company)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ProductType.ProductTypeId)
+                @Html.DisplayFor(modelItem => item.ProductType.ProductTypeName)
+            </td>
+            <td>
+                @if (item.ImageFile == null)
+                {
+                    <img src="~/Images/NotFound.png" alt="image not found" width="50" height="50">
+                }
+                else
+                {
+                    <img src="~/Images/ProductPhotos/@item.SupplierId.ToString()/@item.ImageFile" width="50" height="50" />
+
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.SupplierChange.CreatedBy)

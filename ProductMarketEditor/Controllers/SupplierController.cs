@@ -11,6 +11,7 @@ using ProductMarketEditor.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -19,14 +20,17 @@ namespace ProductMarketEditor.Controllers
     public class SupplierController : Controller
     {
         private ProductMarketDBContext context;
+        private readonly IConfiguration configuration;
+        private IWebHostEnvironment hostEnvironment;
 
-        public SupplierController(ProductMarketDBContext context)
+        public SupplierController(ProductMarketDBContext context, IConfiguration configuration, IWebHostEnvironment hostEnvironment)
         {
             this.context = context;
-
+            this.configuration = configuration;
+            this.hostEnvironment = hostEnvironment;
         }
 
-        public ActionResult Index()
+            public ActionResult Index()
         {
             List<Supplier> suppliers = context.Suppliers.Include(a => a.ProductType).Include(a => a.SupplierChange).ToList();
             return View(suppliers);
@@ -48,7 +52,7 @@ namespace ProductMarketEditor.Controllers
             return View(createSupplierViewModel);
         }
         [HttpPost]
-        public IActionResult Create(CreateSupplierViewModel model)
+        public IActionResult Create(CreateSupplierViewModel model, IFormFile photo)
         {
             SupplierChange changelog = new SupplierChange();
             changelog.CreatedBy = this.HttpContext.User.Identity.Name;
@@ -66,10 +70,38 @@ namespace ProductMarketEditor.Controllers
             supplier.ProductTypeId = model.SelectedTypeId;
             supplier.ProductType = context.ProductTypes.FirstOrDefault(a => a.ProductTypeId == model.SelectedTypeId);
             supplier.SupplierChangeId= model.SupplierChangeId;
-
             context.Suppliers.Add(supplier);
             context.SaveChanges();
-            return RedirectToAction("Index");
+
+            if (photo != null)
+            {
+                model.ErrorMessageVisible = false;
+                string wwwRootPath = hostEnvironment.WebRootPath;
+                string imagesPath = configuration.GetValue<string>("LogosLocation");
+
+                string directoryPath = Path.Combine(imagesPath, supplier.SupplierId.ToString());
+                if (!Directory.Exists(directoryPath))
+                {
+                    Directory.CreateDirectory(directoryPath);
+                }
+
+                string fileName = string.Format("{0}.jpg", Path.GetFileNameWithoutExtension(Path.GetRandomFileName()));
+                context.Suppliers.FirstOrDefault(a => a == supplier).ImageFile = fileName;
+                string filePath = Path.Combine(directoryPath, fileName);
+                using (Stream fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    photo.CopyTo(fileStream);
+                }
+
+                context.SaveChanges();
+                return RedirectToAction("Index");
+
+            }
+            else
+            {
+                context.SaveChanges();
+                return RedirectToAction("Index");
+            }
             
         }
 
@@ -106,11 +138,11 @@ namespace ProductMarketEditor.Controllers
                 originalSupplier.Company = editedSupplier.Company;
                 originalSupplier.ProductTypeId = editedSupplier.ProductTypeId;
 
-
+                /*
                 SupplierChange editing = context.SupplierChanges.FirstOrDefault(b=>b.SupplierChangeId == originalSupplier.SupplierChangeId);
                 editing.EditedBy = this.HttpContext.User.Identity.Name;
                 editing.EditedOn = DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss tt"); 
-
+                */
                 viewModel.SuccessMessageVisible = true;
                 context.SaveChanges();
             }

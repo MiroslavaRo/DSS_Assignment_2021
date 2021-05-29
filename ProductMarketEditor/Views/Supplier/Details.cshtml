@@ -46,6 +46,15 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.SupplierChange.EditedOn)
         </dd>
+        <dd class="col-sm-10">
+            @if (Model.ImageFile!= null)
+            {
+                <img src="~/Images/SupplierLogo/@Model.SupplierId.ToString()/@Model.ImageFile" alt="@Model.ImageFile" width="250" height="250" />
+            }
+            else
+            {
+                <img src="/Images/NotFound.png" alt="image not found" width="50" height="50">
+            }
     </dl>
 </div>
 <div>

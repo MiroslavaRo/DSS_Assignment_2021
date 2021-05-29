@@ -56,33 +56,33 @@ namespace ProductMarketEditor.Data
 
             
             modelBuilder.Entity<Supplier>()
-                .HasData(new Supplier { SupplierId = 1, Company = "Burum", ProductTypeId = 11, SupplierChangeId=1});
+                .HasData(new Supplier { SupplierId = 1, Company = "Burum", ProductTypeId = 11, SupplierChangeId=1, ImageFile= "burum.jpg" });
             modelBuilder.Entity<Supplier>()
-               .HasData(new Supplier { SupplierId = 2, Company = "Prostokvashino", ProductTypeId = 3, SupplierChangeId = 1 });
+               .HasData(new Supplier { SupplierId = 2, Company = "Prostokvashino", ProductTypeId = 3, SupplierChangeId = 1, ImageFile = "prostokvashino.jpg" });
             modelBuilder.Entity<Supplier>()
-              .HasData(new Supplier { SupplierId = 3, Company = "H&S Bakery", ProductTypeId = 4, SupplierChangeId = 1 });
+              .HasData(new Supplier { SupplierId = 3, Company = "H&S Bakery", ProductTypeId = 4, SupplierChangeId = 1, ImageFile = "h&s bakery.jpg" });
             modelBuilder.Entity<Supplier>()
-             .HasData(new Supplier { SupplierId = 4, Company = "Aryzita", ProductTypeId = 4, SupplierChangeId = 1 });
+             .HasData(new Supplier { SupplierId = 4, Company = "Aryzita", ProductTypeId = 4, SupplierChangeId = 1, ImageFile = "ARYZTA.jpg" });
             modelBuilder.Entity<Supplier>()
-             .HasData(new Supplier { SupplierId = 5, Company = "Bacardi", ProductTypeId = 6, SupplierChangeId = 1 });
+             .HasData(new Supplier { SupplierId = 5, Company = "Bacardi", ProductTypeId = 6, SupplierChangeId = 1, ImageFile = "bacardi.jpg" });
             modelBuilder.Entity<Supplier>()
-             .HasData(new Supplier { SupplierId = 6, Company = "Corona", ProductTypeId = 6, SupplierChangeId = 1 });
+             .HasData(new Supplier { SupplierId = 6, Company = "Corona", ProductTypeId = 6, SupplierChangeId = 1, ImageFile = "Corona.jpg" });
             modelBuilder.Entity<Supplier>()
-             .HasData(new Supplier { SupplierId = 7, Company = "Nescafe", ProductTypeId = 5, SupplierChangeId = 1 });
+             .HasData(new Supplier { SupplierId = 7, Company = "Nescafe", ProductTypeId = 5, SupplierChangeId = 1, ImageFile = "nescafe.jpg" });
             modelBuilder.Entity<Supplier>()
-             .HasData(new Supplier { SupplierId = 8, Company = "Nesquik", ProductTypeId = 5, SupplierChangeId = 1 });
+             .HasData(new Supplier { SupplierId = 8, Company = "Nesquik", ProductTypeId = 5, SupplierChangeId = 1, ImageFile = "nesquik.jpg" });
             modelBuilder.Entity<Supplier>()
-             .HasData(new Supplier { SupplierId = 9, Company = "Maruha Nichiro", ProductTypeId = 11, SupplierChangeId = 1 });
+             .HasData(new Supplier { SupplierId = 9, Company = "Maruha Nichiro", ProductTypeId = 11, SupplierChangeId = 1, ImageFile = "maruhanichiro.jpg" });
             modelBuilder.Entity<Supplier>()
-             .HasData(new Supplier { SupplierId = 10, Company = "Dairy Pure", ProductTypeId = 3, SupplierChangeId = 1 });
+             .HasData(new Supplier { SupplierId = 10, Company = "Dairy Pure", ProductTypeId = 3, SupplierChangeId = 1, ImageFile = "DairyPure.jpg" });
             modelBuilder.Entity<Supplier>()
-             .HasData(new Supplier { SupplierId = 11, Company = "Mowi", ProductTypeId = 11, SupplierChangeId = 1 });
+             .HasData(new Supplier { SupplierId = 11, Company = "Mowi", ProductTypeId = 11, SupplierChangeId = 1, ImageFile = "MOWI.jpg" });
             modelBuilder.Entity<Supplier>()
-             .HasData(new Supplier { SupplierId = 12, Company = "Prima", ProductTypeId = 1, SupplierChangeId = 1 });
+             .HasData(new Supplier { SupplierId = 12, Company = "Prima", ProductTypeId = 1, SupplierChangeId = 1, ImageFile = "prima.jpg" });
             modelBuilder.Entity<Supplier>()
-             .HasData(new Supplier { SupplierId = 13, Company = "Prima", ProductTypeId = 2, SupplierChangeId = 1 });
+             .HasData(new Supplier { SupplierId = 13, Company = "Prima", ProductTypeId = 2, SupplierChangeId = 1, ImageFile = "prima.jpg" });
             modelBuilder.Entity<Supplier>()
-             .HasData(new Supplier { SupplierId = 14, Company = "Tyson Product", ProductTypeId = 10, SupplierChangeId = 1 });
+             .HasData(new Supplier { SupplierId = 14, Company = "Tyson Product", ProductTypeId = 10, SupplierChangeId = 1, ImageFile = "tysonproduct.jpg" });
 
             modelBuilder.Entity<SupplierChange>()
                 .HasData(new SupplierChange { SupplierChangeId = 1, CreatedBy = "LindaCole", EditedBy = "LindaCole", CreatedOn = "2021/05/20 11:30:30 AM", EditedOn = "2021/05/20 11:30:30 AM" });
