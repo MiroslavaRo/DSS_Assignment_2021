@@ -2,19 +2,17 @@
 using ProductMarketEditor.Models;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace ProductMarketEditor.ViewModels
 {
-    public class SupplierEditViewModel
+    public class DeleteSupplierViewModel
     {
-        public Supplier SupplierToBeEdited { get; set; }
+        public Supplier SupplierToBeDeleted { get; set; }
 
         public List<SelectListItem> ProductTypes { get; set; }
 
-        public bool SuccessMessageVisible { get; set; }
         public bool ErrorMessageVisible { get; set; }
     }
 }

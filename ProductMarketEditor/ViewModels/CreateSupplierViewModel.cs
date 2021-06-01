@@ -21,8 +21,8 @@ namespace ProductMarketEditor.ViewModels
 
         public IEnumerable<SelectListItem> ProductTypes { get; set; }
 
-        [Display(Name = "Supplier")]
-        [Required(ErrorMessage = "Please Select Company..")]
+        [Display(Name = "Type of product")]
+        [Required(ErrorMessage = "Please Select Product Type..")]
         public int SelectedTypeId { get; set; }
 
         public bool ErrorMessageVisible { get; set; }

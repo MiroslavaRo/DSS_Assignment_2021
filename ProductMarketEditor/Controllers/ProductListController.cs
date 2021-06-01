@@ -33,7 +33,6 @@ namespace ProductStoreEditor.Controllers
     
         public ActionResult Index()
         {
-            
             List<Product> products = context.Products.Include(a=>a.ProductChange)
                   .Include(c => c.Supplier).ToList();
             return View(products);
@@ -182,6 +181,9 @@ namespace ProductStoreEditor.Controllers
         [HttpPost]
         public ActionResult Delete(Product product)
         {
+            Product productToDelete = context.Products.Include(a=>a.ProductChange).FirstOrDefault(a => a.ProductId == product.ProductId);
+            ProductChange deletelog = context.ProductChanges.FirstOrDefault(a => a.ProductChangeId == productToDelete.ProductChangeId);
+
             string imagesPath = configuration.GetValue<string>("ProductPhotosLocation");
           
             string directoryPath = Path.Combine(imagesPath, product.ProductId.ToString());
@@ -194,8 +196,8 @@ namespace ProductStoreEditor.Controllers
                 }
                     Directory.Delete(directoryPath);
                 }
-           
-            context.Products.Remove(product);
+            context.ProductChanges.Remove(deletelog);
+            context.Products.Remove(productToDelete);
             context.SaveChanges();
 
             return RedirectToAction("Index");

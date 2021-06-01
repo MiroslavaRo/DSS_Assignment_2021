@@ -33,7 +33,7 @@
         </div>
         <div class="form-group">
             <label class="control-label">Supplier</label>
-            <select asp-for="SupplierToBeEdited.ProductType" class="form-control" asp-items="Model.ProductTypes"></select>
+            <select asp-for="SupplierToBeEdited.ProductTypeId" class="form-control" asp-items="Model.ProductTypes"></select>
             <input type="hidden" asp-for="SupplierToBeEdited.ProductType" class="form-control" />
             <span asp-validation-for="SupplierToBeEdited.ProductTypeId" class="text-danger"></span>
         </div>
@@ -44,7 +44,7 @@
             }
             else
             {
-                <img src="~/Images/ProductPhotos/@Model.SupplierToBeEdited.SupplierId.ToString()/@Model.SupplierToBeEdited.ImageFile" width="150" height="150" />
+                <img src="~/Images/SupplierLogo/@Model.SupplierToBeEdited.SupplierId.ToString()/@Model.SupplierToBeEdited.ImageFile" width="150" height="150" />
             }
             <input type="hidden" asp-for="SupplierToBeEdited.ImageFile" />
         </div>

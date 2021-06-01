@@ -20,6 +20,9 @@
                 @Html.DisplayNameFor(model => model.ProductType)
             </th>
             <th>
+                Logo
+            </th>
+            <th>
                 CreatedBy
             </th>
             <th>
@@ -50,7 +53,7 @@
                 }
                 else
                 {
-                    <img src="~/Images/ProductPhotos/@item.SupplierId.ToString()/@item.ImageFile" width="50" height="50" />
+                    <img src="~/Images/SupplierLogo/@item.SupplierId.ToString()/@item.ImageFile" width="50" height="50" />
 
                 }
             </td>

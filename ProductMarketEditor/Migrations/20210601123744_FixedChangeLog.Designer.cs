@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProductMarketEditor.Data;
 
 namespace ProductMarketEditor.Migrations
 {
     [DbContext(typeof(ProductMarketDBContext))]
-    partial class ProductMarketDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210601123744_FixedChangeLog")]
+    partial class FixedChangeLog
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -86,7 +88,7 @@ namespace ProductMarketEditor.Migrations
 
                     b.HasKey("ProductChangeId");
 
-                    b.ToTable("ProductChanges");
+                    b.ToTable("ProductChange");
 
                     b.HasData(
                         new
@@ -374,7 +376,7 @@ namespace ProductMarketEditor.Migrations
 
                     b.HasKey("SupplierChangeId");
 
-                    b.ToTable("SupplierChanges");
+                    b.ToTable("SupplierChange");
 
                     b.HasData(
                         new

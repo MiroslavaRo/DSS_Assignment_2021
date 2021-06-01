@@ -17,7 +17,7 @@ namespace ProductMarketEditor.Data
         public DbSet<Supplier> Suppliers { get; set; }        
         public DbSet<User> Users { get; set; }
         public DbSet<ProductChange> ProductChanges { get; set; }
-        public DbSet<ProductChange> SupplierChanges { get; set; }
+        public DbSet<SupplierChange> SupplierChanges { get; set; }
 
         /*
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -58,35 +58,61 @@ namespace ProductMarketEditor.Data
             modelBuilder.Entity<Supplier>()
                 .HasData(new Supplier { SupplierId = 1, Company = "Burum", ProductTypeId = 11, SupplierChangeId=1, ImageFile= "burum.jpg" });
             modelBuilder.Entity<Supplier>()
-               .HasData(new Supplier { SupplierId = 2, Company = "Prostokvashino", ProductTypeId = 3, SupplierChangeId = 1, ImageFile = "prostokvashino.jpg" });
+               .HasData(new Supplier { SupplierId = 2, Company = "Prostokvashino", ProductTypeId = 3, SupplierChangeId = 2, ImageFile = "prostokvashino.jpg" });
             modelBuilder.Entity<Supplier>()
-              .HasData(new Supplier { SupplierId = 3, Company = "H&S Bakery", ProductTypeId = 4, SupplierChangeId = 1, ImageFile = "h&s bakery.jpg" });
+              .HasData(new Supplier { SupplierId = 3, Company = "H&S Bakery", ProductTypeId = 4, SupplierChangeId = 3, ImageFile = "h&s bakery.jpg" });
             modelBuilder.Entity<Supplier>()
-             .HasData(new Supplier { SupplierId = 4, Company = "Aryzita", ProductTypeId = 4, SupplierChangeId = 1, ImageFile = "ARYZTA.jpg" });
+             .HasData(new Supplier { SupplierId = 4, Company = "Aryzita", ProductTypeId = 4, SupplierChangeId = 4, ImageFile = "ARYZTA.jpg" });
             modelBuilder.Entity<Supplier>()
-             .HasData(new Supplier { SupplierId = 5, Company = "Bacardi", ProductTypeId = 6, SupplierChangeId = 1, ImageFile = "bacardi.jpg" });
+             .HasData(new Supplier { SupplierId = 5, Company = "Bacardi", ProductTypeId = 6, SupplierChangeId = 5, ImageFile = "bacardi.jpg" });
             modelBuilder.Entity<Supplier>()
-             .HasData(new Supplier { SupplierId = 6, Company = "Corona", ProductTypeId = 6, SupplierChangeId = 1, ImageFile = "Corona.jpg" });
+             .HasData(new Supplier { SupplierId = 6, Company = "Corona", ProductTypeId = 6, SupplierChangeId = 6, ImageFile = "Corona.jpg" });
             modelBuilder.Entity<Supplier>()
-             .HasData(new Supplier { SupplierId = 7, Company = "Nescafe", ProductTypeId = 5, SupplierChangeId = 1, ImageFile = "nescafe.jpg" });
+             .HasData(new Supplier { SupplierId = 7, Company = "Nescafe", ProductTypeId = 5, SupplierChangeId = 7, ImageFile = "nescafe.jpg" });
             modelBuilder.Entity<Supplier>()
-             .HasData(new Supplier { SupplierId = 8, Company = "Nesquik", ProductTypeId = 5, SupplierChangeId = 1, ImageFile = "nesquik.jpg" });
+             .HasData(new Supplier { SupplierId = 8, Company = "Nesquik", ProductTypeId = 5, SupplierChangeId = 8, ImageFile = "nesquik.jpg" });
             modelBuilder.Entity<Supplier>()
-             .HasData(new Supplier { SupplierId = 9, Company = "Maruha Nichiro", ProductTypeId = 11, SupplierChangeId = 1, ImageFile = "maruhanichiro.jpg" });
+             .HasData(new Supplier { SupplierId = 9, Company = "Maruha Nichiro", ProductTypeId = 11, SupplierChangeId = 9, ImageFile = "maruhanichiro.jpg" });
             modelBuilder.Entity<Supplier>()
-             .HasData(new Supplier { SupplierId = 10, Company = "Dairy Pure", ProductTypeId = 3, SupplierChangeId = 1, ImageFile = "DairyPure.jpg" });
+             .HasData(new Supplier { SupplierId = 10, Company = "Dairy Pure", ProductTypeId = 3, SupplierChangeId = 10, ImageFile = "DairyPure.jpg" });
             modelBuilder.Entity<Supplier>()
-             .HasData(new Supplier { SupplierId = 11, Company = "Mowi", ProductTypeId = 11, SupplierChangeId = 1, ImageFile = "MOWI.jpg" });
+             .HasData(new Supplier { SupplierId = 11, Company = "Mowi", ProductTypeId = 11, SupplierChangeId = 11, ImageFile = "MOWI.jpg" });
             modelBuilder.Entity<Supplier>()
-             .HasData(new Supplier { SupplierId = 12, Company = "Prima", ProductTypeId = 1, SupplierChangeId = 1, ImageFile = "prima.jpg" });
+             .HasData(new Supplier { SupplierId = 12, Company = "Prima", ProductTypeId = 1, SupplierChangeId = 12, ImageFile = "prima.jpg" });
             modelBuilder.Entity<Supplier>()
-             .HasData(new Supplier { SupplierId = 13, Company = "Prima", ProductTypeId = 2, SupplierChangeId = 1, ImageFile = "prima.jpg" });
+             .HasData(new Supplier { SupplierId = 13, Company = "Prima", ProductTypeId = 2, SupplierChangeId = 13, ImageFile = "prima.jpg" });
             modelBuilder.Entity<Supplier>()
-             .HasData(new Supplier { SupplierId = 14, Company = "Tyson Product", ProductTypeId = 10, SupplierChangeId = 1, ImageFile = "tysonproduct.jpg" });
+             .HasData(new Supplier { SupplierId = 14, Company = "Tyson Product", ProductTypeId = 10, SupplierChangeId = 14, ImageFile = "tysonproduct.jpg" });
 
             modelBuilder.Entity<SupplierChange>()
                 .HasData(new SupplierChange { SupplierChangeId = 1, CreatedBy = "LindaCole", EditedBy = "LindaCole", CreatedOn = "2021/05/20 11:30:30 AM", EditedOn = "2021/05/20 11:30:30 AM" });
-
+            modelBuilder.Entity<SupplierChange>()
+               .HasData(new SupplierChange { SupplierChangeId = 2, CreatedBy = "LindaCole", EditedBy = "LindaCole", CreatedOn = "2021/05/20 11:30:30 AM", EditedOn = "2021/05/20 11:30:30 AM" });
+            modelBuilder.Entity<SupplierChange>()
+               .HasData(new SupplierChange { SupplierChangeId = 3, CreatedBy = "LindaCole", EditedBy = "LindaCole", CreatedOn = "2021/05/20 11:30:30 AM", EditedOn = "2021/05/20 11:30:30 AM" });
+            modelBuilder.Entity<SupplierChange>()
+                .HasData(new SupplierChange { SupplierChangeId = 4, CreatedBy = "LindaCole", EditedBy = "LindaCole", CreatedOn = "2021/05/20 11:30:30 AM", EditedOn = "2021/05/20 11:30:30 AM" });
+            modelBuilder.Entity<SupplierChange>()
+                .HasData(new SupplierChange { SupplierChangeId = 5, CreatedBy = "LindaCole", EditedBy = "LindaCole", CreatedOn = "2021/05/20 11:30:30 AM", EditedOn = "2021/05/20 11:30:30 AM" });
+            modelBuilder.Entity<SupplierChange>()
+                 .HasData(new SupplierChange { SupplierChangeId = 6, CreatedBy = "LindaCole", EditedBy = "LindaCole", CreatedOn = "2021/05/20 11:30:30 AM", EditedOn = "2021/05/20 11:30:30 AM" });
+            modelBuilder.Entity<SupplierChange>()
+               .HasData(new SupplierChange { SupplierChangeId = 7, CreatedBy = "LindaCole", EditedBy = "LindaCole", CreatedOn = "2021/05/20 11:30:30 AM", EditedOn = "2021/05/20 11:30:30 AM" });
+            modelBuilder.Entity<SupplierChange>()
+               .HasData(new SupplierChange { SupplierChangeId = 8, CreatedBy = "LindaCole", EditedBy = "LindaCole", CreatedOn = "2021/05/20 11:30:30 AM", EditedOn = "2021/05/20 11:30:30 AM" });
+            modelBuilder.Entity<SupplierChange>()
+                .HasData(new SupplierChange { SupplierChangeId = 9, CreatedBy = "LindaCole", EditedBy = "LindaCole", CreatedOn = "2021/05/20 11:30:30 AM", EditedOn = "2021/05/20 11:30:30 AM" });
+            modelBuilder.Entity<SupplierChange>()
+                .HasData(new SupplierChange { SupplierChangeId = 10, CreatedBy = "LindaCole", EditedBy = "LindaCole", CreatedOn = "2021/05/20 11:30:30 AM", EditedOn = "2021/05/20 11:30:30 AM" });
+            modelBuilder.Entity<SupplierChange>()
+              .HasData(new SupplierChange { SupplierChangeId = 11, CreatedBy = "LindaCole", EditedBy = "LindaCole", CreatedOn = "2021/05/20 11:30:30 AM", EditedOn = "2021/05/20 11:30:30 AM" });
+            modelBuilder.Entity<SupplierChange>()
+               .HasData(new SupplierChange { SupplierChangeId = 12, CreatedBy = "LindaCole", EditedBy = "LindaCole", CreatedOn = "2021/05/20 11:30:30 AM", EditedOn = "2021/05/20 11:30:30 AM" });
+            modelBuilder.Entity<SupplierChange>()
+               .HasData(new SupplierChange { SupplierChangeId = 13, CreatedBy = "LindaCole", EditedBy = "LindaCole", CreatedOn = "2021/05/20 11:30:30 AM", EditedOn = "2021/05/20 11:30:30 AM" });
+            modelBuilder.Entity<SupplierChange>()
+                .HasData(new SupplierChange { SupplierChangeId = 14, CreatedBy = "LindaCole", EditedBy = "LindaCole", CreatedOn = "2021/05/20 11:30:30 AM", EditedOn = "2021/05/20 11:30:30 AM" });
+         
 
             modelBuilder.Entity<Product>()
              .HasData(new Product { ProductId = 1, ProductChangeId = 1, ProductName = "Prostokvashino Milk 3.2%", SupplierId = 2, ImageFileName = "1.jpg" });

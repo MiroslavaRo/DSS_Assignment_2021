@@ -30,7 +30,7 @@ namespace ProductMarketEditor.Controllers
             this.hostEnvironment = hostEnvironment;
         }
 
-            public ActionResult Index()
+        public ActionResult Index()
         {
             List<Supplier> suppliers = context.Suppliers.Include(a => a.ProductType).Include(a => a.SupplierChange).ToList();
             return View(suppliers);
@@ -39,6 +39,7 @@ namespace ProductMarketEditor.Controllers
 
         public ActionResult Details(int id)
         {
+            List<Product> products = context.Products.ToList();
             Supplier supplier = context.Suppliers.Include(a => a.ProductType).Include(a => a.SupplierChange).FirstOrDefault(a=>a.SupplierId==id);
             return View(supplier);
         }
@@ -54,6 +55,7 @@ namespace ProductMarketEditor.Controllers
         [HttpPost]
         public IActionResult Create(CreateSupplierViewModel model, IFormFile photo)
         {
+            
             SupplierChange changelog = new SupplierChange();
             changelog.CreatedBy = this.HttpContext.User.Identity.Name;
             changelog.CreatedOn = DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss tt");
@@ -61,9 +63,9 @@ namespace ProductMarketEditor.Controllers
             changelog.EditedOn = changelog.CreatedOn;
             context.SupplierChanges.Add(changelog);
             context.SaveChanges();
-            model.SupplierChangeId = context.SupplierChanges.First(a => a.CreatedOn == changelog.CreatedOn).ProductChangeId;
+            model.SupplierChangeId = context.SupplierChanges.First(a => a.CreatedOn == changelog.CreatedOn).SupplierChangeId;
              
-
+            
 
             Supplier supplier = new Supplier();
             supplier.Company = model.Company;
@@ -137,16 +139,76 @@ namespace ProductMarketEditor.Controllers
                 Supplier originalSupplier = context.Suppliers.FirstOrDefault(a => a.SupplierId == editedSupplier.SupplierId);
                 originalSupplier.Company = editedSupplier.Company;
                 originalSupplier.ProductTypeId = editedSupplier.ProductTypeId;
+                originalSupplier.ImageFile = editedSupplier.ImageFile;
 
-                /*
-                SupplierChange editing = context.SupplierChanges.FirstOrDefault(b=>b.SupplierChangeId == originalSupplier.SupplierChangeId);
-                editing.EditedBy = this.HttpContext.User.Identity.Name;
-                editing.EditedOn = DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss tt"); 
-                */
+                
+                SupplierChange edit = context.SupplierChanges.FirstOrDefault(a => a.SupplierChangeId == originalSupplier.SupplierChangeId);
+                edit.EditedBy = this.HttpContext.User.Identity.Name;
+                edit.EditedOn = DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss tt");
+                
                 viewModel.SuccessMessageVisible = true;
                 context.SaveChanges();
             }
             return View(viewModel);
+        }
+        [Authorize]
+        public ActionResult Delete(int id)
+        {
+            CultureInfo cultureInfo = CultureInfo.CurrentCulture;
+            Supplier supplier = context.Suppliers.Include(a => a.ProductType).Include(a => a.SupplierChange).First(a => a.SupplierId == id);
+
+            DeleteSupplierViewModel viewModel = new DeleteSupplierViewModel();
+            viewModel.SupplierToBeDeleted = supplier;
+            viewModel.ProductTypes = GetTypes();
+          
+
+            return View(viewModel);
+        }
+
+
+        [HttpPost]
+        public ActionResult Delete(DeleteSupplierViewModel viewModel)
+        {
+            List<Product> products = context.Products.ToList();
+            foreach (var product in products)
+            {
+                if (product.SupplierId == viewModel.SupplierToBeDeleted.SupplierId)
+                {
+                    viewModel.ErrorMessageVisible = true;
+                }
+            }
+            if (viewModel.ErrorMessageVisible == true)
+            {
+                return View(viewModel);
+            }
+            else
+            {
+                Supplier supplier = context.Suppliers.Include(a => a.ProductType)
+                .Include(a => a.SupplierChange)
+                .First(a => a.SupplierId == viewModel.SupplierToBeDeleted.SupplierId);
+                SupplierChange deletelog = context.SupplierChanges.FirstOrDefault(a => a.SupplierChangeId == supplier.SupplierChangeId);
+              
+    
+
+                string imagesPath = configuration.GetValue<string>("LogosLocation");
+
+                string directoryPath = Path.Combine(imagesPath, supplier.SupplierId.ToString());
+                if (Directory.Exists(directoryPath))
+                {
+                    var files = Directory.GetFiles(directoryPath);
+                    foreach (var file in files)
+                    {
+                        System.IO.File.Delete(file);
+                    }
+                    Directory.Delete(directoryPath);
+                }
+                context.SupplierChanges.Remove(deletelog);
+                context.Suppliers.Remove(supplier);
+                context.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
+            
         }
         private List<SelectListItem> GetTypes()
         {
